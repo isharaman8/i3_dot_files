@@ -22,4 +22,5 @@
   <li>File Manager: Thunar</li>
   <li>Icons: Papirus-Dark</li>
   <li>Font: Fira Code Retina</li>
+  <li>Color Palette: Nord</li>
 <hr>
