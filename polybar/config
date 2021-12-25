@@ -65,7 +65,7 @@ separator = |
 
 tray-position = right
 tray-padding = 2
-tray-background = #0063ff
+tray-background = ${colors.background}
 
 ;wm-restack = bspwm
 ;wm-restack = i3
@@ -348,12 +348,12 @@ adapter = ACAD
 full-at = 98
 
 
-format-charging =  <label-charging>
+format-charging = CHR <label-charging>
 ;<animation-charging> <label-charging>
 format-charging-underline = #a3be8c
 
 
-format-discharging =  <label-discharging>
+format-discharging = DIS <label-discharging>
 ;<animation-discharging> <label-discharging>
 format-discharging-underline = #ebcb8b
 ;${self.format-charging-underline}

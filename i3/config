@@ -118,6 +118,13 @@ bindsym $mod+space focus mode_toggle
 # focus the parent container
 bindsym $mod+a focus parent
 
+# Make the currently focused window a scratchpad
+#bindsym $mod+Shift+minus move scratchpad
+# Show the first scratchpad window
+#bindsym $mod+minus scratchpad show
+# Show the sup-mail scratchpad window, if any.
+#bindsym $mod+s [title="^Sup ::"] scratchpad show
+
 # focus the child container
 #bindsym $mod+d focus child
 
@@ -162,8 +169,10 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
+#bindsym $mod+Shift+e exit
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+#/bin/bash: line 1: /usr/share/python: No such file or directory
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -207,8 +216,8 @@ bindsym $mod+Shift+g mode "$mode_gaps"
 for_window [class="^.*"] border pixel 2
 
 #set inner / outer gaps
-gaps inner 5
-gaps outer 5
+#gaps inner 5
+#gaps outer 5
 mode "$mode_gaps" {
         bindsym o      mode "$mode_gaps_outer"
         bindsym i      mode "$mode_gaps_inner"
@@ -406,10 +415,12 @@ bindsym $mod+x exec /home/amankumar/.config/scripts/lock
 
 #Assign Programs to workspaces
 for_window [class="firefox"] move to workspace $ws2
-for_window [class="Code"] move to workspace $ws3
+#for_window [class="Code"] move to workspace $ws3
 for_window [class="zoom"] move to workspace $ws4
 for_window [class="Slack"] move to workspace $ws5
 
+#Making apps with zoom class floating
+#for_window [class="zoom"] floating enable
 #Compositor
 exec_always picom -f
 
