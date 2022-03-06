@@ -142,7 +142,7 @@ wrapping-scroll = false
 ; Only show workspaces on the same output as the bar
 ;pin-workspaces = true
 ws-icon-0 = 1;
-ws-icon-1 = 2;
+ws-icon-1 = 2;
 ws-icon-2 = 3;
 ws-icon-3 = 4;
 ws-icon-4 = 5;
@@ -236,7 +236,7 @@ type = internal/network
 interface = wlo2
 interval = 3.0
 
-format-connected = <ramp-signal> <label-connected>
+format-connected = <label-connected>
 format-connected-underline = #b48ead
 label-connected = %essid%
 
@@ -348,12 +348,12 @@ adapter = ACAD
 full-at = 98
 
 
-format-charging = CHR <label-charging>
+format-charging =  <label-charging>
 ;<animation-charging> <label-charging>
 format-charging-underline = #a3be8c
 
 
-format-discharging = DIS <label-discharging>
+format-discharging =  <label-discharging>
 ;<animation-discharging> <label-discharging>
 format-discharging-underline = #ebcb8b
 ;${self.format-charging-underline}
@@ -434,6 +434,16 @@ menu-3-0 = suspend
 menu-3-0-exec = sudo suspend
 menu-3-1 = cancel
 menu-3-1-exec = menu-open-0
+
+[module/bluetooth]
+type = custom/script
+exec = /home/amankumar/.config/scripts/bluetooth.sh
+interval = 2
+click-left = exec /home/amankumar/.config/scripts/toggle_bluetooth.sh
+click-right = exec /home/amankumar/.config/scripts/toggle_bluetooth.sh
+format-padding = 1
+format-background = ${colors.background}
+format-foreground = #ffffff
 
 [settings]
 screenchange-reload = true

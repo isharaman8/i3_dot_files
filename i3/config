@@ -123,7 +123,7 @@ bindsym $mod+a focus parent
 # Show the first scratchpad window
 #bindsym $mod+minus scratchpad show
 # Show the sup-mail scratchpad window, if any.
-#bindsym $mod+s [title="^Sup ::"] scratchpad show
+#bindsym Shift+s [title="^Sup ::"] scratchpad show
 
 # focus the child container
 #bindsym $mod+d focus child
@@ -407,7 +407,7 @@ client.urgent           $ubgcolor       $ubgcolor               $textcolor      
 #}
 
 #Display Wallpaper
-exec_always feh --bg-fill /usr/share/backgrounds/nordic-wallpapers/ign_dudeOnBuilding3.png
+exec_always feh --bg-fill /data/amankumar/Downloads/ALL_PICTURES_AND_WALLPAPERS/Endy_vector_satelliet.png
 
 
 #Keybinding for i3lock
@@ -415,6 +415,7 @@ bindsym $mod+x exec /home/amankumar/.config/scripts/lock
 
 #Assign Programs to workspaces
 for_window [class="firefox"] move to workspace $ws2
+for_window [class="Google-chrome"] move to workspace $ws2
 #for_window [class="Code"] move to workspace $ws3
 for_window [class="zoom"] move to workspace $ws4
 for_window [class="Slack"] move to workspace $ws5
@@ -438,3 +439,11 @@ exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 #Gnome Keyring Daemon
 exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=ssh,secrets,pkcs1
+
+#Xrandr settings for always using 1366x768 configuration
+exec_always xrandr --output eDP1 --mode 1366x768
+
+#Redshift
+#exec_always redshift
+
+
