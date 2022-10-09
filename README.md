@@ -17,10 +17,8 @@
 <ul>
   <li>Bar: Polybar</li>
   <li>Compositor: Picom</li>
-  <li>WM: i3</li>
-  <li>Terminal ASCII: neofetch(obviously)</li>
-  <li>File Manager: Thunar</li>
-  <li>Icons: Papirus-Dark</li>
-  <li>Font: Fira Code Retina</li>
+  <li>WM: i3-gaps</li>
+  <li>Terminal ASCII: neofetch</li>
+  <li>File Manager: Ranger</li>
   <li>Color Palette: Nord</li>
 <hr>
