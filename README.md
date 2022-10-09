@@ -4,13 +4,13 @@
 
 <hr>
 <p>Main Screen</p>
-<img src="/screenshots/mainScreen.jpg" alt="main screen" />
+<img src="/screenshots/mainScreen.png" alt="main screen" />
 <br><hr>
 <p>File Viewer</p>
-<img src="/screenshots/folderManager.jpg" alt="folder manager" />
+<img src="/screenshots/folderManager.png" alt="folder manager" />
 <br><hr>
 <p>Text Editor / IDE</p>
-<img src="/screenshots/vsCode1.jpg" alt="folder manager" />
+<img src="/screenshots/texteditor.png" alt="text editor" />
 
 <hr>
 <h2>My Setup</h2>
