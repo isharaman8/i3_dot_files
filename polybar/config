@@ -18,7 +18,7 @@
 
 [colors]
 ;background = ${xrdb:color0:#222}
-background = #BF2e3440
+background = #801a1b26
 background-alt = #BF2e3440
 ;foreground = ${xrdb:color7:#222}
 foreground = #ffffff
@@ -27,44 +27,67 @@ primary = #ebcb8b
 secondary = #8fbcbb
 alert = #5e81ac
 
+
+; Modules Prefix Colors
+backlight-background=#ff1793D1
+pulseaudio-background=#565f89
+cpu-background=#21325E
+battery-background=#04293A
+temperature-background=#2e3440
+wifi-background=#064663
+time-background=#3E497A
+powermenu-background=${colors.background}
+xwindow-background=#041C32
+
+
 [bar/customBar]
 ;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
 height = 30
-;offset-x = 1%
-;offset-y = 1%
-radius = 0
-fixed-center = false
+; offset-x = 1%
+; offset-y = 1%
 
-background = ${colors.background}
+; margin-top=10
+radius = 10
+fixed-center = true
+
+background = ${colors.background} 
 foreground = ${colors.foreground}
 
-line-size = 4
+line-size = 3pt
 line-color = #ebcb8b
 
-border-size = 0
+border-size = 5pt
+margin-left=20pt
+border-radius=10
 border-color = #00000000
 
 padding-left = 0
-padding-right = 1
+padding-right = 0
 
-module-margin-left = 1
-module-margin-right = 1
+module-margin-left = 0
+module-margin-right = 0
 
 font-0 = fixed:pixelsize=10;1
 font-1 = unifont:fontformat=truetype:size=10:antialias=true;0
-font-2 = siji:pixelsize=10;1
-font-3 = Font Awesome 5 Free:pixelsize=12;2
-font-4 = Font Awesome 5 Free Solid:pixelsize=12;2
-font-5 = Font Awesome 5 Brands:pixelsize=12;2
+font-2 = FontAwesome:style=Regular:pixelsize=11;2
+font-3 = "SauceCodePro Nerd Font Mono:style=Regular:size=20;5"
 
-modules-left = i3
+#font-2 = siji:pixelsize=10;1
+#font- = "SauceCodePro Nerd Font Mono:style=Medium,Regular:size=30;5"
+;font-3 = Font Awesome 5 Free:pixelsize=12;2
+;font-4 = Font Awesome 5 Free Solid:pixelsize=12;2
+;font-5 = Font Awesome 5 Brands:pixelsize=12;2
+
+modules-left =  i3 
 modules-center = xwindow
-modules-right = xbacklight pulseaudio cpu battery temperature wlan date powermenu
-separator = |
+modules-right = pulseaudio cpu battery wlan date powermenu
 
-tray-position = right
+
+tray-position = none
 tray-padding = 2
+tray-detached=false
+; tray-transparent=true
 tray-background = ${colors.background}
 
 ;wm-restack = bspwm
@@ -85,11 +108,27 @@ cursor-scroll = ns-resize
 type = internal/xwindow
 label = %title:0:30:...%
 
+format=<label>
+
+format-prefix= " "
+format-prefix-background=${colors.background}
+format-prefix-foreground=${colors.xwindow-background}
+format-background=${colors.xwindow-background}
+
+format-suffix= ""
+format-suffix-background=${colors.background}
+format-suffix-foreground=${colors.xwindow-background}
+
+
+
 [module/xkeyboard]
 type = internal/xkeyboard
 blacklist-0 = num lock
 
 format-prefix = " "
+
+
+
 format-prefix-foreground = ${colors.foreground-alt}
 format-prefix-underline = ${colors.secondary}
 
@@ -136,6 +175,13 @@ label-empty-padding = 2
 [module/i3]
 type = internal/i3
 format = <label-state> <label-mode>
+
+format-suffix= ""
+format-suffix-background=${colors.background}
+format-suffix-foreground=${colors.pulseaudio-background}
+format-background=${colors.background}
+
+
 index-sort = true
 wrapping-scroll = false
 
@@ -154,13 +200,14 @@ label-mode-background = ${colors.primary}
 
 ; focused = Active workspace on focused monitor
 label-focused = %icon%
-label-focused-background = ${colors.background-alt}
+label-focused-background = ${colors.pulseaudio-background}
 label-focused-underline= ${colors.primary}
 label-focused-padding = 2
 
 ; unfocused = Inactive workspace on any monitor
 label-unfocused = %icon%
 label-unfocused-padding = 2
+label-unfocused-background = ${colors.pulseaudio-background}
 
 ; visible = Active workspace on unfocused monitor
 label-visible = %icon%
@@ -175,6 +222,33 @@ label-urgent-padding = 2
 
 ; Separator in between workspaces
 ; label-separator = |
+
+[module/spotify]
+type = custom/script
+tail = true
+; prefix symbol is shown before the text
+format-prefix = "SPT "
+format = <label>
+exec = ~/.config/polybar/scripts/scroll_spotify_status.sh
+
+[module/spotify-prev]
+type = custom/script
+exec = echo <previous-song-symbol>
+format = <label>
+click-left = playerctl previous -p spotify
+
+[module/spotify-play-pause]
+type = custom/ipc
+hook-0 = echo <playing-symbol>
+hook-1 = echo <pause-symbol>
+initial = 1
+click-left = playerctl play-pause -p spotify
+
+[module/spotify-next]
+type = custom/script
+exec = echo "next-song-symbol"
+format = <label>
+click-left = playerctl next -p spotify
 
 
 [module/mpd]
@@ -193,7 +267,7 @@ label-song-ellipsis = true
 [module/xbacklight]
 type = internal/xbacklight
 
-format = <label> 
+format =<label> 
 ;<bar>
 format-prefix = " "
 label = %percentage%%
@@ -214,13 +288,69 @@ inherit = module/xbacklight
 type = internal/backlight
 card = intel_backlight
 
+[module/backlight]
+type = internal/backlight
+
+; Use the following command to list available cards:
+; $ ls -1 /sys/class/backlight/
+card = intel_backlight
+
+; Use the `/sys/class/backlight/.../actual-brightness` file
+; rather than the regular `brightness` file.
+; Defaults to true unless the specified card is an amdgpu backlight.
+; New in version 3.6.0
+use-actual-brightness = true
+
+; Enable changing the backlight with the scroll wheel
+; NOTE: This may require additional configuration on some systems. Polybar will
+; write to `/sys/class/backlight/${self.card}/brightness` which requires polybar
+; to have write access to that file.
+; DO NOT RUN POLYBAR AS ROOT. 
+; The recommended way is to add the user to the
+; `video` group and give that group write-privileges for the `brightness` file.
+; See the ArchWiki for more information:
+; https://wiki.archlinux.org/index.php/Backlight#ACPI
+; Default: false
+enable-scroll = false
+; Available tags:
+;   <label> (default)
+;   <ramp>
+;   <bar>
+format =  <label> 
+format-prefix= " "
+format-prefix-background=${colors.background}
+format-prefix-foreground=${colors.backlight-background}
+format-background=${colors.backlight-background}
+; Available tokens:
+;   %percentage% (default)
+label = %percentage%%
+
+; Only applies if <ramp> is used
+;ramp-backlight-0 = 
+;ramp-backlight-1 = 
+;ramp-backlight-2 = 
+;ramp-backlight-3 = 
+;ramp-backlight-4 = 
+
+; Only applies if <bar> is used
+bar-width = 10
+bar-indicator = |
+bar-fill = ─
+bar-empty = ─
+
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = " "
-format-prefix-foreground = ${colors.foreground-alt}
-;format-background = #434c5e
-format-underline = #bf616a 
+
+
+format-prefix=""
+format-suffix="  "
+format-prefix-foreground=${colors.cpu-background}
+format-prefix-background=${colors.pulseaudio-background}
+format-background=${colors.cpu-background}
+; format-underline = #bf616a 
+
+format= <label>
 label = %percentage:2%%
 
 [module/memory]
@@ -233,19 +363,24 @@ label = %percentage_used%
 
 [module/wlan]
 type = internal/network
-interface = wlo2
+interface = wlo1
 interval = 3.0
 
-format-connected = <label-connected>
-format-connected-underline = #b48ead
+format-connected =<ramp-signal> <label-connected>
+
+format-connected-prefix=""
+format-connected-suffix="  "
+format-connected-prefix-foreground=${colors.wifi-background}
+format-connected-prefix-background=${colors.battery-background}
+format-connected-background=${colors.wifi-background}
+
 label-connected = %essid%
 
-format-disconnected =
+format-disconnected = <label-disconnected>
 ;format-disconnected = <label-disconnected>
 ;format-disconnected-underline = ${self.format-connected-underline}
 ;label-disconnected = %ifname% disconnected
 ;label-disconnected-foreground = ${colors.foreground-alt}
-
 ramp-signal-0 = 
 ramp-signal-1 = 
 ramp-signal-2 = 
@@ -263,7 +398,7 @@ format-connected-prefix = " "
 format-connected-prefix-foreground = ${colors.foreground-alt}
 label-connected = %local_ip%
 
-format-disconnected =
+; format-disconnected =
 ;format-disconnected = <label-disconnected>
 ;format-disconnected-underline = ${self.format-connected-underline}
 ;label-disconnected = %ifname% disconnected
@@ -279,8 +414,13 @@ date-alt = " %Y-%m-%d"
 time = %H:%M
 time-alt = %H:%M:%S
 
-format-prefix = 
-format-prefix-foreground =3be8c ${colors.foreground-alt}
+; format-prefix = 
+; format-prefix-foreground =3be8c ${colors.foreground-alt}
+format-prefix=""
+format-suffix="  "
+format-prefix-foreground=${colors.time-background}
+format-prefix-background=${colors.wifi-background}
+format-background=${colors.time-background}
 ;format-underline = #a3be8c
 
 label = %date% %time%
@@ -288,12 +428,22 @@ label = %date% %time%
 [module/pulseaudio]
 type = internal/pulseaudio
 
-format-volume = <label-volume> 
+format-volume =<ramp-volume> <label-volume> 
+
+format-volume-prefix= ""
+format-volume-suffix="  "
+format-volume-prefix-background=${colors.background}
+format-volume-prefix-foreground=${colors.pulseaudio-background}
+format-volume-background=${colors.pulseaudio-background}
+
 ;<bar-volume>
-label-volume =  %percentage%%
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+label-volume = %percentage%%
 label-volume-foreground = ${root.foreground}
 
-label-muted = 🔇 muted
+label-muted = muted
 label-muted-foreground = #666
 
 bar-volume-width = 10
@@ -343,28 +493,38 @@ bar-volume-empty-foreground = ${colors.foreground-alt}
 
 [module/battery]
 type = internal/battery
-battery = BAT1
-adapter = ACAD
+battery = BAT0
+adapter = AC0
 full-at = 98
 
 
+; Format Charging
 format-charging =  <label-charging>
-;<animation-charging> <label-charging>
-format-charging-underline = #a3be8c
+format-charging-prefix= " "
+format-charging-suffix="  "
+format-charging-prefix-background=${colors.cpu-background}
+format-charging-prefix-foreground=${colors.battery-background}
+format-charging-background=${colors.battery-background}
 
 
-format-discharging =  <label-discharging>
-;<animation-discharging> <label-discharging>
-format-discharging-underline = #ebcb8b
-;${self.format-charging-underline}
+; Format Discharging
+format-discharging = <label-discharging>
+format-discharging-suffix="  "
+format-discharging-prefix= " "
+format-discharging-prefix-background=${colors.cpu-background}
+format-discharging-prefix-foreground=${colors.battery-background}
+format-discharging-background=${colors.battery-background}
+
+
 
 format-full-prefix = " "
 format-full-prefix-foreground = ${colors.foreground-alt}
 format-full-underline = ${self.format-charging-underline}
 
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
 ramp-capacity-foreground = ${colors.foreground-alt}
 
 animation-charging-0 = 
@@ -385,8 +545,14 @@ thermal-zone = 0
 warn-temperature = 60
 
 format =  <label>
-;format-background = #bf616a 
-format-underline = #eceff4
+; Format Charging
+format-prefix= " "
+format-prefix-background=${colors.battery-background}
+format-prefix-foreground=${colors.temperature-background}
+format-background=${colors.temperature-background}
+
+
+;format-background = #bf616a
 format-warn =  <label-warn>
 format-warn-underline = #bf616a 
 
@@ -402,38 +568,37 @@ ramp-foreground = ${colors.foreground-alt}
 [module/powermenu]
 type = custom/menu
 
-expand-right = true
+format-foreground = ${colors.foreground}
+; format-background = ${colors.background}
 
-format-spacing = 1
+format-prefix= " "
+format-suffix="    "
+format-prefix-background=${colors.time-background}
+format-prefix-foreground=${colors.powermenu-background}
+format-background=${colors.powermenu-background}
 
-label-open = 
-label-open-foreground = ${colors.secondary}
-label-close =  cancel
-label-close-foreground = ${colors.secondary}
-label-separator = |
-label-separator-foreground = ${colors.foreground-alt}
 
-menu-0-0 = reboot
-menu-0-0-exec = systemctl reboot
-menu-0-1 = power off
-menu-0-1-exec = systemclt poweroff
+label-open =   
+
+label-open-font = 4
+label-close = "cancel"
+label-close-foreground = ${colors.foreground}
+label-separator = " | "
+label-separator-foreground = ${colors.foreground}
+
+
+; reboot
+menu-0-1 = reboot
+menu-0-1-exec = systemctl reboot
+menu-0-1-foreground = ${colors.foreground}
+; shutdown
+menu-0-0 = poweroff
+menu-0-0-exec = systemctl poweroff
+menu-0-0-foreground = ${colors.foreground}
+;suspend
 menu-0-2 = suspend
 menu-0-2-exec = systemctl suspend
-
-menu-1-0 = cancel
-menu-1-0-exec = menu-open-0
-menu-1-1 = reboot
-menu-1-1-exec = menu-open-0
-
-menu-2-0 = power off
-menu-2-0-exec = sudo poweroff
-menu-2-1 = cancel
-menu-2-1-exec = menu-open-0
-
-menu-3-0 = suspend
-menu-3-0-exec = sudo suspend
-menu-3-1 = cancel
-menu-3-1-exec = menu-open-0
+menu-0-2-foreground = ${colors.foreground}
 
 [module/bluetooth]
 type = custom/script

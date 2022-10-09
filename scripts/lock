@@ -2,10 +2,10 @@
 
 BLANK='#00000000'
 CLEAR='#ffffff22'
-DEFAULT='#00897bE6'
-TEXT='#00897bE6'
+DEFAULT='#008002'
+TEXT='#008002'
 WRONG='#880000bb'
-VERIFYING='#00564dE6'
+VERIFYING='#008002'
 
 /usr/bin/i3lock \
 --insidever-color=$CLEAR     \
@@ -28,7 +28,7 @@ VERIFYING='#00564dE6'
 --bshl-color=$WRONG          \
 \
 --screen 1                   \
---blur 5                     \
+--blur 7                       \
 --clock                      \
 --indicator                  \
 --time-str="%H:%M:%S"        \

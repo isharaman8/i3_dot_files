@@ -1,9 +1,0 @@
-{
-    "languageserver": {
-        "ccls": {
-            "enable": false,
-            "filetypes": ["c"]
-        }
-    }
-}
-

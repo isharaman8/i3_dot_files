@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ ! $(prep "spotifyd") ]; then
+if [ ! $(pgrep "spotifyd") ]; then
 	spotifyd
 fi
 spt

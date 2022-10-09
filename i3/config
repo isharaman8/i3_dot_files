@@ -52,8 +52,7 @@ bindsym XF86AudioPrev exec playerctl previous
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
-
+bindsym $mod+Return exec alacritty 
 # kill focused window
 bindsym $mod+Shift+q kill
 
@@ -176,27 +175,28 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
+# These bindings trigger as soon as you enter the resize mode
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
+# Pressing left will shrink the window’s width.
+# Pressing right will grow the window’s width.
+#
+# Pressing up will shrink the window’s height.
+# Pressing down will grow the window’s height.
+   bindsym j resize shrink width 10 px or 10 ppt
+      bindsym k resize grow height 10 px or 10 ppt
+      bindsym l resize shrink height 10 px or 10 ppt
+      bindsym semicolon resize grow width 10 px or 10 ppt
 
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+# same bindings, but for the arrow keys
+      bindsym Left resize shrink width 10 px or 10 ppt
+      bindsym Down resize grow height 10 px or 10 ppt
+      bindsym Up resize shrink height 10 px or 10 ppt
+      bindsym Right resize grow width 10 px or 10 ppt
 
-        # back to normal: Enter or Escape or $mod+r
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-        bindsym $mod+r mode "default"
+# back to normal: Enter or Escape or $mod+r
+      bindsym Return mode "default"
+      bindsym Escape mode "default"
+      bindsym $mod+r mode "default"
 }
 
 bindsym $mod+r mode "resize"
@@ -216,141 +216,142 @@ bindsym $mod+Shift+g mode "$mode_gaps"
 for_window [class="^.*"] border pixel 2
 
 #set inner / outer gaps
-#gaps inner 5
-#gaps outer 5
+gaps inner 5
+gaps outer 5
+gaps top 0
 mode "$mode_gaps" {
-        bindsym o      mode "$mode_gaps_outer"
-        bindsym i      mode "$mode_gaps_inner"
-        bindsym h      mode "$mode_gaps_horiz"
-        bindsym v      mode "$mode_gaps_verti"
-        bindsym t      mode "$mode_gaps_top"
-        bindsym r      mode "$mode_gaps_right"
-        bindsym b      mode "$mode_gaps_bottom"
-        bindsym l      mode "$mode_gaps_left"
-        bindsym Return mode "$mode_gaps"
-        bindsym Escape mode "default"
+   bindsym o      mode "$mode_gaps_outer"
+      bindsym i      mode "$mode_gaps_inner"
+      bindsym h      mode "$mode_gaps_horiz"
+      bindsym v      mode "$mode_gaps_verti"
+      bindsym t      mode "$mode_gaps_top"
+      bindsym r      mode "$mode_gaps_right"
+      bindsym b      mode "$mode_gaps_bottom"
+      bindsym l      mode "$mode_gaps_left"
+      bindsym Return mode "$mode_gaps"
+      bindsym Escape mode "default"
 }
 
 mode "$mode_gaps_outer" {
-        bindsym plus  gaps outer current plus 5
-        bindsym minus gaps outer current minus 5
-        bindsym 0     gaps outer current set 0
+   bindsym plus  gaps outer current plus 5
+      bindsym minus gaps outer current minus 5
+      bindsym 0     gaps outer current set 0
 
-        bindsym Shift+plus  gaps outer all plus 5
-        bindsym Shift+minus gaps outer all minus 5
-        bindsym Shift+0     gaps outer all set 0
+      bindsym Shift+plus  gaps outer all plus 5
+      bindsym Shift+minus gaps outer all minus 5
+      bindsym Shift+0     gaps outer all set 0
 
-        bindsym Return mode "$mode_gaps"
-        bindsym Escape mode "default"
+      bindsym Return mode "$mode_gaps"
+      bindsym Escape mode "default"
 }
 mode "$mode_gaps_inner" {
-        bindsym plus  gaps inner current plus 5
-        bindsym minus gaps inner current minus 5
-        bindsym 0     gaps inner current set 0
+   bindsym plus  gaps inner current plus 5
+      bindsym minus gaps inner current minus 5
+      bindsym 0     gaps inner current set 0
 
-        bindsym Shift+plus  gaps inner all plus 5
-        bindsym Shift+minus gaps inner all minus 5
-        bindsym Shift+0     gaps inner all set 0
+      bindsym Shift+plus  gaps inner all plus 5
+      bindsym Shift+minus gaps inner all minus 5
+      bindsym Shift+0     gaps inner all set 0
 
-        bindsym Return mode "$mode_gaps"
-        bindsym Escape mode "default"
+      bindsym Return mode "$mode_gaps"
+      bindsym Escape mode "default"
 }
 mode "$mode_gaps_horiz" {
-        bindsym plus  gaps horizontal current plus 5
-        bindsym minus gaps horizontal current minus 5
-        bindsym 0     gaps horizontal current set 0
+   bindsym plus  gaps horizontal current plus 5
+      bindsym minus gaps horizontal current minus 5
+      bindsym 0     gaps horizontal current set 0
 
-        bindsym Shift+plus  gaps horizontal all plus 5
-        bindsym Shift+minus gaps horizontal all minus 5
-        bindsym Shift+0     gaps horizontal all set 0
+      bindsym Shift+plus  gaps horizontal all plus 5
+      bindsym Shift+minus gaps horizontal all minus 5
+      bindsym Shift+0     gaps horizontal all set 0
 
-        bindsym Return mode "$mode_gaps"
-        bindsym Escape mode "default"
+      bindsym Return mode "$mode_gaps"
+      bindsym Escape mode "default"
 }
 mode "$mode_gaps_verti" {
-        bindsym plus  gaps vertical current plus 5
-        bindsym minus gaps vertical current minus 5
-        bindsym 0     gaps vertical current set 0
+   bindsym plus  gaps vertical current plus 5
+      bindsym minus gaps vertical current minus 5
+      bindsym 0     gaps vertical current set 0
 
-        bindsym Shift+plus  gaps vertical all plus 5
-        bindsym Shift+minus gaps vertical all minus 5
-        bindsym Shift+0     gaps vertical all set 0
+      bindsym Shift+plus  gaps vertical all plus 5
+      bindsym Shift+minus gaps vertical all minus 5
+      bindsym Shift+0     gaps vertical all set 0
 
-        bindsym Return mode "$mode_gaps"
-        bindsym Escape mode "default"
+      bindsym Return mode "$mode_gaps"
+      bindsym Escape mode "default"
 }
 mode "$mode_gaps_top" {
-        bindsym plus  gaps top current plus 5
-        bindsym minus gaps top current minus 5
-        bindsym 0     gaps top current set 0
+   bindsym plus  gaps top current plus 5
+      bindsym minus gaps top current minus 5
+      bindsym 0     gaps top current set 0
 
-        bindsym Shift+plus  gaps top all plus 5
-        bindsym Shift+minus gaps top all minus 5
-        bindsym Shift+0     gaps top all set 0
+      bindsym Shift+plus  gaps top all plus 5
+      bindsym Shift+minus gaps top all minus 5
+      bindsym Shift+0     gaps top all set 0
 
-        bindsym Return mode "$mode_gaps"
-        bindsym Escape mode "default"
+      bindsym Return mode "$mode_gaps"
+      bindsym Escape mode "default"
 }
 mode "$mode_gaps_right" {
-        bindsym plus  gaps right current plus 5
-        bindsym minus gaps right current minus 5
-        bindsym 0     gaps right current set 0
+   bindsym plus  gaps right current plus 5
+      bindsym minus gaps right current minus 5
+      bindsym 0     gaps right current set 0
 
-        bindsym Shift+plus  gaps right all plus 5
-        bindsym Shift+minus gaps right all minus 5
-        bindsym Shift+0     gaps right all set 0
+      bindsym Shift+plus  gaps right all plus 5
+      bindsym Shift+minus gaps right all minus 5
+      bindsym Shift+0     gaps right all set 0
 
-        bindsym Return mode "$mode_gaps"
-        bindsym Escape mode "default"
+      bindsym Return mode "$mode_gaps"
+      bindsym Escape mode "default"
 }
 mode "$mode_gaps_bottom" {
-        bindsym plus  gaps bottom current plus 5
-        bindsym minus gaps bottom current minus 5
-        bindsym 0     gaps bottom current set 0
+   bindsym plus  gaps bottom current plus 5
+      bindsym minus gaps bottom current minus 5
+      bindsym 0     gaps bottom current set 0
 
-        bindsym Shift+plus  gaps bottom all plus 5
-        bindsym Shift+minus gaps bottom all minus 5
-        bindsym Shift+0     gaps bottom all set 0
+      bindsym Shift+plus  gaps bottom all plus 5
+      bindsym Shift+minus gaps bottom all minus 5
+      bindsym Shift+0     gaps bottom all set 0
 
-        bindsym Return mode "$mode_gaps"
-        bindsym Escape mode "default"
+      bindsym Return mode "$mode_gaps"
+      bindsym Escape mode "default"
 }
 mode "$mode_gaps_left" {
-        bindsym plus  gaps left current plus 5
-        bindsym minus gaps left current minus 5
-        bindsym 0     gaps left current set 0
+   bindsym plus  gaps left current plus 5
+      bindsym minus gaps left current minus 5
+      bindsym 0     gaps left current set 0
 
-        bindsym Shift+plus  gaps left all plus 5
-        bindsym Shift+minus gaps left all minus 5
-        bindsym Shift+0     gaps left all set 0
+      bindsym Shift+plus  gaps left all plus 5
+      bindsym Shift+minus gaps left all minus 5
+      bindsym Shift+0     gaps left all set 0
 
-        bindsym Return mode "$mode_gaps"
-        bindsym Escape mode "default"
+      bindsym Return mode "$mode_gaps"
+      bindsym Escape mode "default"
 }
 
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
+# These bindings trigger as soon as you enter the resize mode
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
+# Pressing left will shrink the window’s width.
+# Pressing right will grow the window’s width.
+# Pressing up will shrink the window’s height.
+# Pressing down will grow the window’s height.
+   bindsym j resize shrink width 10 px or 10 ppt
+      bindsym k resize grow height 10 px or 10 ppt
+      bindsym l resize shrink height 10 px or 10 ppt
+      bindsym semicolon resize grow width 10 px or 10 ppt
 
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+# same bindings, but for the arrow keys
+      bindsym Left resize shrink width 10 px or 10 ppt
+      bindsym Down resize grow height 10 px or 10 ppt
+      bindsym Up resize shrink height 10 px or 10 ppt
+      bindsym Right resize grow width 10 px or 10 ppt
 
-        # back to normal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+# back to normal: Enter or Escape
+      bindsym Return mode "default"
+      bindsym Escape mode "default"
 }
 
 
@@ -382,7 +383,7 @@ set $nord14  #A3BE8C
 set $nord15  #B48EAD
 
 #			border 		background		text 		indicator
-client.focused  	$nord0        	$nord10                $textcolor      	$nord6	
+client.focused  	$nord5        	$nord3                $textcolor      	$nord6	
 client.unfocused        $ibgcolor       $ibgcolor               $itextcolor      $ibgcolor
 client.focused_inactive $ibgcolor       $ibgcolor               $itextcolor      $ibgcolor
 client.urgent           $ubgcolor       $ubgcolor               $textcolor      $ubgcolor
@@ -407,11 +408,11 @@ client.urgent           $ubgcolor       $ubgcolor               $textcolor      
 #}
 
 #Display Wallpaper
-exec_always feh --bg-fill /data/amankumar/Downloads/ALL_PICTURES_AND_WALLPAPERS/Endy_vector_satelliet.png
-
+exec_always feh --bg-fill /usr/share/backgrounds/nordic-wallpapers/ign_nordic_triangle.png
+exec_always dunst
 
 #Keybinding for i3lock
-bindsym $mod+x exec /home/amankumar/.config/scripts/lock
+bindsym $mod+x exec archlinux-logout
 
 #Assign Programs to workspaces
 for_window [class="firefox"] move to workspace $ws2
@@ -421,9 +422,13 @@ for_window [class="zoom"] move to workspace $ws4
 for_window [class="Slack"] move to workspace $ws5
 
 #Making apps with zoom class floating
-#for_window [class="zoom"] floating enable
+for_window [class="zoom"] floating enable
+for_window [title="Zoom Meeting"] floating enable
+for_window [title="Zoom Meeting"] move to workspace $ws4
+for_window [class="plank"] floating enable
 #Compositor
-exec_always picom -f
+exec_always picom --experimental-backends
+#exec_always plank
 
 #Increase/Decrease Screen brightness
 
@@ -431,8 +436,20 @@ exec_always picom -f
 #bindsym XF86MonBrightnessDown exec --no-startup-id bash -c 'b=$(xrandr --verbose | grep -i brightness | head -n 1 | cut -d" " -f2) && b2=$(echo -e "import math\nf = lambda x: (1 - 1/(1+math.exp(4*x-2)))\nprint(\\\"%.2f\\\" % f(-0.1+$b))" | python) && xrandr --output eDP1 --brightness $b2'
 
 #Screen Lights Settings two (works)
-bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
-bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
+#bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
+#bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
+
+
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
+
+
+
+#bindsym XF86MonBrightnessUp exec --no-startup-id bash -c 'b=$(xrandr --verbose | grep -i brightness | head -n 1 | cut -d" " -f2) && b2=$(echo -e "import math\nf = lambda x: (1 - 1/(1+math.exp(4*x-2)))\nprint(\\\"%.2f\\\" % f(0.1+$b))" | python) && xrandr --output eDP-1 --brightness $b2'
+
+#bindsym XF86MonBrightnessDown exec --no-startup-id bash -c 'b=$(xrandr --verbose | grep -i brightness | head -n 1 | cut -d" " -f2) && b2=$(echo -e "import math\nf = lambda x: (1 - 1/(1+math.exp(4*x-2)))\nprint(\\\"%.2f\\\" % f(-0.1+$b))" | python) && xrandr --output eDP-1 --brightness $b2'
+
+
 
 #Polybar launch script
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
@@ -442,6 +459,7 @@ exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=ssh,secr
 
 #Xrandr settings for always using 1366x768 configuration
 exec_always xrandr --output eDP1 --mode 1366x768
+exec_always --no-startup-id sh /home/amankumar/.conky/conky-startup.sh
 
 #Redshift
 #exec_always redshift
