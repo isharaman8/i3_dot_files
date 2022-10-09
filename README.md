@@ -9,7 +9,7 @@
 <p>File Viewer</p>
 <img src="/screenshots/folderManager.jpg" alt="folder manager" />
 <br><hr>
-<p>VS Code</p>
+<p>Text Editor / IDE</p>
 <img src="/screenshots/vsCode1.jpg" alt="folder manager" />
 
 <hr>
