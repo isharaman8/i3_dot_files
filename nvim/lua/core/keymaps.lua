@@ -43,7 +43,7 @@ map('n', '<A-j>', '<C-w>j')
 map('n', '<A-k>', '<C-w>k')
 map('n', '<A-l>', '<C-w>l')
 
--- Reload configuration without restart nvim
+-- Reload configuratiohtmln without restart nvim
 map('n', '<leader>r', ':so %<CR>')
 
 -- Fast saving with <leader> and s
@@ -68,4 +68,5 @@ map('n', '<leader>f', ':NvimTreeRefresh<CR>')       -- refresh
 
 -- Tagbar
 map('n', '<leader>z', ':TagbarToggle<CR>')          -- open/close
+map('n', '<C-p>', ':FZF<CR>') -- fuzzy finder
 
