@@ -1,0 +1,1 @@
+conky -c ~/.config/conky/Arco-Redux-LUA.conkyrc & sleep 1s
