@@ -3,6 +3,6 @@ if status is-interactive
     neofetch --ascii_distro artix
 
     # ABBREVATIONS file path
-    source /home/amank/.config/fish/completions/abbr.fish
+    source /$HOME/.config/fish/completions/abbr.fish
 
 end
