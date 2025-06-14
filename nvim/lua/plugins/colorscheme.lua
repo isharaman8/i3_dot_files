@@ -1,13 +1,12 @@
 return {
+  -- add gruvbox
+  { "olimorris/onedarkpro.nvim" },
+
+  -- Configure LazyVim to load gruvbox
   {
-    "craftzdog/solarized-osaka.nvim",
-    branch = "osaka",
-    lazy = true,
-    priority = 1000,
-    opts = function()
-      return {
-        transparent = true,
-      }
-    end,
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "onedark_vivid",
+    },
   },
 }

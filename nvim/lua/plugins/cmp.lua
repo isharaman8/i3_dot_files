@@ -2,6 +2,8 @@ return {
   -- Main autocomplete plugin
   "hrsh7th/nvim-cmp",
 
+  enabled = true,
+
   -- Load cmp dependencies
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
