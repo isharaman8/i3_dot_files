@@ -1,0 +1,5 @@
+# keyboard bindings
+
+[[keyboard.bindings]]
+action = "ToggleFullscreen"
+key = "F11"
