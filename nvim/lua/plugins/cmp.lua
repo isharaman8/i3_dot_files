@@ -27,9 +27,24 @@ return {
     }
 
     opts.mapping = cmp.mapping.preset.insert({
-      ["<CR>"] = cmp.mapping.confirm({ select = true }),
-      ["<Tab>"] = cmp.mapping.select_next_item(),
-      ["<S-Tab>"] = cmp.mapping.select_prev_item(),
+
+      -- Smart <CR>
+      ["<CR>"] = cmp.mapping(function(fallback)
+        if cmp.visible() and cmp.get_selected_entry() then
+          cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+        else
+          fallback()
+        end
+      end, { "i", "s" }),
+
+      -- Smart <S-Tab>
+      ["<S-Tab>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        else
+          fallback()
+        end
+      end, { "i", "s" }),
     })
 
     opts.sources = cmp.config.sources({

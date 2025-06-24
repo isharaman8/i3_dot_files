@@ -27,6 +27,11 @@ return {
       capabilities = capabilities,
     })
 
+    -- C/C++
+    lspconfig.clangd.setup({
+      capabilities = capabilities,
+    })
+
     -- Add more servers if you want
   end,
 }

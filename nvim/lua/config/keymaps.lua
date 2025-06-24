@@ -4,6 +4,11 @@
 local map = vim.keymap.set
 
 map("n", "<C-f>", LazyVim.pick("live_grep"), { desc = "Grep (Root Dir)" })
+map("i", "<CR>", "<CR>")
+
+-- map("n", "<C-_>", "gcc", { remap = true, desc = "Toggle comment line" })
+-- map("v", "<C-_>", "gc", { remap = true, desc = "Toggle comment selection" })
+-- map("o", "<C-_>", "gc", { remap = true, desc = "Toggle comment selection" })
 
 -- Normal mode: toggle comment on current line
 -- map("n", "<C-_>", "gcc", { desc = "Toggle line comment" })
