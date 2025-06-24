@@ -1,0 +1,12 @@
+{
+	"try": {
+		"prefix": "try",
+		"body": [
+		  "try {",
+		  "}catch(err) {",
+		  "  console.log(\"Error\", err);",
+		  "}"
+		],
+		"description": "try catch block snippet"
+	  }
+}

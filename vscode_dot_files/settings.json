@@ -1,0 +1,153 @@
+{
+	"workbench.editorAssociations": {
+		"*.copilotmd": "vscode.markdown.preview.editor",
+		"*.ipynb": "jupyter-notebook",
+		"*.zip": "default"
+	},
+	"jupyter.askForKernelRestart": false,
+	"explorer.confirmDragAndDrop": false,
+	"explorer.confirmDelete": false,
+	"jupyter.textOutputLimit": 0,
+	"notebook.cellToolbarLocation": {
+		"default": "right",
+		"jupyter-notebook": "left"
+	},
+	"security.workspace.trust.untrustedFiles": "open",
+	"editor.fontLigatures": true,
+	"editor.formatOnSave": true,
+	"[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"editor.acceptSuggestionOnCommitCharacter": false,
+		"editor.formatOnSave": true
+	},
+	"[html]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"prettier.useTabs": true,
+	"tabnine.experimentalAutoImports": true,
+	"editor.minimap.enabled": false,
+	"workbench.iconTheme": "material-icon-theme",
+	"javascript.updateImportsOnFileMove.enabled": "always",
+	"debug.onTaskErrors": "debugAnyway",
+	"editor.insertSpaces": false,
+	"C_Cpp.updateChannel": "Insiders",
+	"liveServer.settings.donotVerifyTags": true,
+	"workbench.startupEditor": "none",
+	"window.restoreWindows": "folders",
+	"vscode-edge-devtools.mirrorEdits": true,
+	"python.formatting.provider": "black",
+	"python.formatting.blackArgs": ["--line-length", "88"],
+	"solidity.compileUsingRemoteVersion": "0.6.0",
+	"bracketPairColorizer.depreciation-notice": false,
+	"editor.tabSize": 2,
+	"typescript.updateImportsOnFileMove.enabled": "always",
+	"[cpp]": {
+		"editor.defaultFormatter": "ms-vscode.cpptools"
+	},
+	"C_Cpp.formatting": "vcFormat",
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"[java]": {
+		"editor.defaultFormatter": "redhat.java"
+	},
+	"editor.fontFamily": "'Fira Code Retina'",
+	"redhat.telemetry.enabled": true,
+	"glassit-linux.opacity": 100,
+	"editor.linkedEditing": true,
+	"editor.fontSize": 15,
+	"liveServer.settings.fullReload": true,
+	"vim.neovimConfigPath": "~/.config/nvim/init.vimP",
+	"[lua]": {
+		"editor.defaultFormatter": "yinfei.luahelper"
+	},
+	"editor.stickyTabStops": true,
+	"editor.stickyScroll.enabled": true,
+	"git.autofetch": true,
+	"vim.vimrc.path": "$HOME/.vimrc",
+	"liveServer.settings.donotShowInfoMsg": true,
+	"sonarlint.rules": {
+		"javascript:S4123": {
+			"level": "off"
+		},
+		"javascript:S3358": {
+			"level": "off"
+		},
+		"secrets:S6334": {
+			"level": "off"
+		},
+		"javascript:S1125": {
+			"level": "off"
+		},
+		"typescript:S3358": {
+			"level": "off"
+		},
+		"Web:FieldsetWithoutLegendCheck": {
+			"level": "off"
+		},
+		"Web:TableWithoutCaptionCheck": {
+			"level": "off"
+		},
+		"javascript:S6477": {
+			"level": "off"
+		}
+	},
+	"[dart]": {
+		"editor.formatOnSave": true,
+		"editor.formatOnType": true,
+		"editor.rulers": [80],
+		"editor.selectionHighlight": false,
+		"editor.suggestSelection": "first",
+		"editor.tabCompletion": "onlySnippets",
+		"editor.wordBasedSuggestions": "off"
+	},
+	"dart.checkForSdkUpdates": false,
+	"workbench.sideBar.location": "right",
+	"svelte.enable-ts-plugin": true,
+	"[svelte]": {
+		"editor.defaultFormatter": "svelte.svelte-vscode"
+	},
+	"workbench.colorTheme": "One Dark Pro",
+	"diffEditor.ignoreTrimWhitespace": false,
+	"glassit.alpha": 40,
+	"terminal.integrated.fontFamily": "JetBrainsMonoNL Nerd Font",
+	"githubPullRequests.pullBranch": "never",
+	"git.enableSmartCommit": true,
+	"git.confirmSync": false,
+	"githubPullRequests.createOnPublishBranch": "never",
+	"gitlens.views.branches.branches.layout": "list",
+	"[python]": {
+		"editor.defaultFormatter": "mikoz.black-py"
+	},
+	"explorer.confirmPasteNative": false,
+	"git.ignoreRebaseWarning": true,
+	"terminal.integrated.defaultProfile.windows": "Ubuntu-22.04 (WSL)",
+	"security.allowedUNCHosts": ["wsl.localhost"],
+	"[xml]": {
+		"editor.defaultFormatter": "redhat.vscode-xml"
+	},
+	"git.openRepositoryInParentFolders": "never",
+	"files.saveConflictResolution": "overwriteFileOnDisk",
+	"[prisma]": {
+		"editor.defaultFormatter": "Prisma.prisma"
+	},
+	"github.copilot.editor.enableAutoCompletions": false,
+	"C_Cpp.copilotHover": "disabled",
+	"evenBetterToml.formatter.allowedBlankLines": 0,
+	"editor.maxTokenizationLineLength": 1000000,
+	"files.associations": {
+		"*.css": "tailwindcss"
+	},
+	"gitlens.rebaseEditor.ordering": "asc",
+	"codeium.enableInComments": false,
+	"codeium.enableConfig": {
+		"*": false
+	},
+	"codeium.enableCodeLens": false,
+	"gitlens.ai.model": "vscode",
+	"gitlens.ai.vscode.model": "copilot:gpt-4",
+	"github.copilot.enable": {
+		"*": false,
+		"plaintext": false,
+		"markdown": false,
+		"scminput": false
+	}
+}

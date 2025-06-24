@@ -1,0 +1,108 @@
+// Place your key bindings in this file to override the defaultsauto[]
+[
+	{
+		"key": "ctrl+k",
+		"command": "-extension.vim_ctrl+k",
+		"when": "editorTextFocus && vim.active && vim.use<C-k> && !inDebugRepl"
+	},
+	{
+		"key": "ctrl+o",
+		"command": "-extension.vim_ctrl+o",
+		"when": "editorTextFocus && vim.active && vim.use<C-o> && !inDebugRepl"
+	},
+	{
+		"key": "backspace",
+		"command": "-extension.vim_backspace",
+		"when": "editorTextFocus && vim.active && !inDebugRepl"
+	},
+	{
+		"key": "ctrl+h",
+		"command": "editor.action.startFindReplaceAction",
+		"when": "editorFocus || editorIsOpen"
+	},
+	{
+		"key": "ctrl+h",
+		"command": "-editor.action.startFindReplaceAction",
+		"when": "editorFocus || editorIsOpen"
+	},
+	{
+		"key": "ctrl+d",
+		"command": "-extension.vim_ctrl+d",
+		"when": "editorTextFocus && vim.active && vim.use<C-d> && !inDebugRepl"
+	},
+	{
+		"key": "ctrl+d",
+		"command": "-list.focusPageDown",
+		"when": "listFocus && !inputFocus"
+	},
+	{
+		"key": "shift+backspace",
+		"command": "deleteLeft",
+		"when": "textInputFocus"
+	},
+	{
+		"key": "shift+backspace",
+		"command": "-deleteLeft",
+		"when": "textInputFocus"
+	},
+	{
+		"key": "shift+backspace",
+		"command": "-extension.vim_shift+backspace",
+		"when": "editorTextFocus && vim.active && vim.use<S-BS> && !inDebugRepl && vim.mode != 'Insert'"
+	},
+	{
+		"key": "ctrl+c",
+		"command": "-extension.vim_ctrl+c",
+		"when": "editorTextFocus && vim.active && vim.overrideCtrlC && vim.use<C-c> && !inDebugRepl"
+	},
+	{
+		"key": "alt+h",
+		"command": "workbench.action.navigateLeft"
+	},
+	{
+		"key": "alt+l",
+		"command": "workbench.action.navigateRight"
+	},
+	{
+		"key": "alt+k",
+		"command": "workbench.action.navigateUp"
+	},
+	{
+		"key": "alt+j",
+		"command": "workbench.action.navigateDown"
+	},
+	{
+		"key": "ctrl+b",
+		"command": "-workbench.view.explorer"
+	},
+	{
+		"key": "ctrl+b",
+		"command": "workbench.view.explorer",
+		"when": "!explorerViewletVisible"
+	},
+	{
+		"key": "ctrl+b",
+		"command": "workbench.action.toggleSidebarVisibility",
+		"when": "explorerViewletVisible"
+	},
+	{
+		"key": "ctrl+j",
+		"command": "editor.action.copyLinesDownAction",
+		"when": "editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+shift+alt+down",
+		"command": "-editor.action.copyLinesDownAction",
+		"when": "editorTextFocus && !editorReadonly"
+	},
+	{
+		"key": "ctrl+p",
+		"command": "-extension.vim_ctrl+p",
+		"when": "editorTextFocus && vim.active && vim.use<C-p> && !inDebugRepl || vim.active && vim.use<C-p> && !inDebugRepl && vim.mode == 'CommandlineInProgress' || vim.active && vim.use<C-p> && !inDebugRepl && vim.mode == 'SearchInProgressMode'"
+	},
+	{
+		"key": "ctrl+i",
+		"command": "-extension.vim_ctrl+i",
+		"when": "editorTextFocus && vim.active && vim.use<C-i> && !inDebugRepl"
+	}
+]
