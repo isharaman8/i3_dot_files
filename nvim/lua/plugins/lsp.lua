@@ -16,6 +16,20 @@ return {
       severity_sort = true,
     })
 
+    -- 🔁 Show floating diagnostics on hover (CursorHold)
+    -- vim.o.updatetime = 500
+    -- vim.api.nvim_create_autocmd("CursorHold", {
+    --   callback = function()
+    --     vim.diagnostic.open_float(nil, {
+    --       focusable = false,
+    --       close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+    --       border = "rounded",
+    --       source = "always",
+    --       prefix = " ",
+    --     })
+    --   end,
+    -- })
+
     -- Example: JS/TS (auto-imports will work!)
     lspconfig.tsserver.setup({
       capabilities = capabilities,

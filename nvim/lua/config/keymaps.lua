@@ -6,6 +6,11 @@ local map = vim.keymap.set
 map("n", "<C-f>", LazyVim.pick("live_grep"), { desc = "Grep (Root Dir)" })
 map("i", "<CR>", "<CR>")
 
+-- Show diagnostic float (copyable)
+map("n", "<leader>de", function()
+  vim.diagnostic.open_float(nil, { focusable = true })
+end, { desc = "Open diagnostic (copyable)" })
+
 -- map("n", "<C-_>", "gcc", { remap = true, desc = "Toggle comment line" })
 -- map("v", "<C-_>", "gc", { remap = true, desc = "Toggle comment selection" })
 -- map("o", "<C-_>", "gc", { remap = true, desc = "Toggle comment selection" })
