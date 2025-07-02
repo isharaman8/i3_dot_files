@@ -1,12 +1,12 @@
 return {
   -- add gruvbox
-  { "morhetz/gruvbox.nvim" },
+  { "edeneast/nightfox.nvim" },
 
   -- Configure LazyVim to load gruvbox
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "gruvbox",
+      colorscheme = "carbonfox",
     },
   },
 }

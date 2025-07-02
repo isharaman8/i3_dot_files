@@ -20,6 +20,7 @@ return {
       html = { "prettier" },
       yaml = { "prettier" },
       markdown = { "prettier" },
+      go = { "goimports" },
     },
   },
 }
