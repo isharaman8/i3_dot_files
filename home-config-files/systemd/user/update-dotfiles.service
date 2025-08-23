@@ -1,0 +1,6 @@
+[Unit]
+Description=Daily Dotfiles Update (User)
+
+[Service]
+Type=oneshot
+ExecStart=/home/amank/bin/update-dotfiles
