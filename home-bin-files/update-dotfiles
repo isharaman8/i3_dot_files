@@ -1,27 +1,89 @@
 #!/bin/bash
 
-# copy home/.config files
-mkdir -p ~/Documents/DOT_FILES/i3_dot_files_update/home-config-files/
-cd ~/.config || exit 1
-cp -rv alacritty/ conky/ fish/ i3/ nvim/ picom/ polybar/ ranger/ systemd/ ~/Documents/DOT_FILES/i3_dot_files_update/home-config-files/
+# === Variables ===
+BACKUP_ROOT=~/Documents/DOT_FILES/i3_dot_files_update
+CONFIG_SRC=~/.config
+BIN_SRC=~/bin
+LOCAL_BIN_SRC=~/.local/bin
+LOCAL_SHARE_SRC=~/.local/share
+LOG_DIR=~/bin/logs
+LOG_FILE=$LOG_DIR/update-dotfiles.log
 
-# copy home/bin files
-mkdir -p ~/Documents/DOT_FILES/i3_dot_files_update/home-bin-files/
-cd ~/bin || exit 1
-rsync -av . --exclude='logs' ~/Documents/DOT_FILES/i3_dot_files_update/home-bin-files/
+CONFIG_DIRS=(
+  alacritty
+  conky
+  fish
+  i3
+  nvim
+  picom
+  polybar
+  ranger
+  systemd
+)
 
-# copy home/local/bin files
-mkdir -p ~/Documents/DOT_FILES/i3_dot_files_update/home-local-bin-files/
-cd ~/.local/bin || exit 1
-cp -rv * ~/Documents/DOT_FILES/i3_dot_files_update/home-local-bin-files/
+# === Ensure log directory exists ===
+mkdir -p "$LOG_DIR"
 
-# copy home/local/share files
-mkdir -p ~/Documents/DOT_FILES/i3_dot_files_update/home-local-share-files/
-cd ~/.local/share || exit 1
-cp -rv archlinux-logout/ ~/Documents/DOT_FILES/i3_dot_files_update/home-local-share-files/
+# === Log function ===
+log() {
+  echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" | tee -a "$LOG_FILE"
+}
 
-# git commit
-cd ~/Documents/DOT_FILES/i3_dot_files_update/
-git add .
-git commit -m "regular files update"
-git push -u origin arcolinux-branch
+# === Array of items to back up ===
+declare -A BACKUP_PATHS
+BACKUP_PATHS["$CONFIG_SRC"]="home-config-files"
+BACKUP_PATHS["$BIN_SRC"]="home-bin-files"
+BACKUP_PATHS["$LOCAL_BIN_SRC"]="home-local-bin-files"
+BACKUP_PATHS["$LOCAL_SHARE_SRC"]="home-local-share-files"
+
+# === Function for copy ===
+backup_dir() {
+  local src=$1
+  local dest=$2
+
+  log "Backing up from $src to $BACKUP_ROOT/$dest"
+  mkdir -p "$BACKUP_ROOT/$dest"
+
+  if [[ "$src" == "$BIN_SRC" ]]; then
+    # bin: use rsync, exclude logs
+    rsync -av --exclude='logs' "$src"/ "$BACKUP_ROOT/$dest/" | tee -a "$LOG_FILE"
+
+  elif [[ "$src" == "$CONFIG_SRC" ]]; then
+    # config: only copy selected folders
+    for dir in "${CONFIG_DIRS[@]}"; do
+      if [ -d "$src/$dir" ]; then
+        cp -rv "$src/$dir" "$BACKUP_ROOT/$dest" | tee -a "$LOG_FILE"
+      else
+        log "⚠️ Skipping missing config: $src/$dir"
+      fi
+    done
+
+  elif [[ "$src" == "$LOCAL_SHARE_SRC" ]]; then
+    # local/share: only copy archlinux-logout
+    if [ -d "$src/archlinux-logout" ]; then
+      cp -rv "$src/archlinux-logout" "$BACKUP_ROOT/$dest" | tee -a "$LOG_FILE"
+    else
+      log "⚠️ Skipping missing: $src/archlinux-logout"
+    fi
+
+  else
+    # default: copy everything
+    cp -rv "$src"/* "$BACKUP_ROOT/$dest/" | tee -a "$LOG_FILE"
+  fi
+}
+
+# === Loop through sources ===
+for src in "${!BACKUP_PATHS[@]}"; do
+  backup_dir "$src" "${BACKUP_PATHS[$src]}"
+done
+
+# === Git commit ===
+cd "$BACKUP_ROOT" || {
+  log "❌ Failed to cd into $BACKUP_ROOT"
+  exit 1
+}
+git add . >>"$LOG_FILE" 2>&1
+git commit -m "regular files update" >>"$LOG_FILE" 2>&1
+git push -u origin arcolinux-branch >>"$LOG_FILE" 2>&1
+
+log "✅ Backup and git push completed"
