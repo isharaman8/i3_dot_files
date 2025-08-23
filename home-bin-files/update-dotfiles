@@ -72,6 +72,29 @@ backup_dir() {
   fi
 }
 
+# function for copying pacman installed packages (aur included)
+backup_packages() {
+  local package_directory="package-list"
+  cd "$BACKUP_ROOT" || {
+    log "x Failed to cd into $BACKUP_ROOT"
+    exit 1
+  }
+
+  if [ ! -d "$package_directory" ]; then
+    log "[WARNING] directory $BACKUP_ROOT/$package_directory does not exist, creating one!"
+
+    mkdir "$package_directory"
+  fi
+
+  cd "$package_directory"
+
+  pacman -Qqe >pkglist.txt
+  pacman -Qqm >aurlist.txt
+}
+
+# use package backup
+backup_packages
+
 # === Loop through sources ===
 for src in "${!BACKUP_PATHS[@]}"; do
   backup_dir "$src" "${BACKUP_PATHS[$src]}"

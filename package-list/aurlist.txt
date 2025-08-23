@@ -1,0 +1,9 @@
+anytype-bin
+dbeaver-ce-bin
+github-desktop-bin
+k6-bin
+neofetch
+redisinsight
+studio-3t
+toptracker
+xautolock
