@@ -1,0 +1,25 @@
+#!/bin/bash
+
+directory="$1"
+prefix="$2"
+count=1
+
+if [ -z "$directory" ] || [ -z "$prefix" ]; then
+    echo "Usage: $0 <directory> <prefix>"
+    exit 1
+fi
+
+if [ ! -d "$directory" ]; then
+    echo "Error: Directory not found!"
+    exit 1
+fi
+
+for file in "$directory"/*; do
+    if [ -f "$file" ]; then
+        ext="${file##*.}"
+        new_name="${prefix}_${count}.$ext"
+        mv "$file" "$directory/$new_name"
+        echo "Renamed: $file -> $new_name"
+        ((count++))
+    fi
+done

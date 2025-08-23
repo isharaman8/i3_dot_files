@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# copy home/.config files
+mkdir -p ~/Documents/DOT_FILES/i3_dot_files_update/home-config-files/
+cd ~/.config || exit 1
+cp -rv alacritty/ conky/ fish/ i3/ nvim/ picom/ polybar/ ranger/ systemd/ ~/Documents/DOT_FILES/i3_dot_files_update/home-config-files/
+
+# copy home/bin files
+mkdir -p ~/Documents/DOT_FILES/i3_dot_files_update/home-bin-files/
+cd ~/bin || exit 1
+rsync -av . --exclude='logs' ~/Documents/DOT_FILES/i3_dot_files_update/home-bin-files/
+
+# copy home/local/bin files
+mkdir -p ~/Documents/DOT_FILES/i3_dot_files_update/home-local-bin-files/
+cd ~/.local/bin || exit 1
+cp -rv * ~/Documents/DOT_FILES/i3_dot_files_update/home-local-bin-files/
+
+# copy home/local/share files
+mkdir -p ~/Documents/DOT_FILES/i3_dot_files_update/home-local-share-files/
+cd ~/.local/share || exit 1
+cp -rv archlinux-logout/ ~/Documents/DOT_FILES/i3_dot_files_update/home-local-share-files/
+
+# git commit
+cd ~/Documents/DOT_FILES/i3_dot_files_update/
+git add .
+git commit -m "regular files update"
+git push -u origin arcolinux-branch

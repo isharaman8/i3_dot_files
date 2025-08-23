@@ -1,0 +1,25 @@
+#!/bin/bash
+
+directory="$1"
+matching_ext="$2"
+new_ext="$3"
+
+if [ -z "$directory" ] || [ -z "$matching_ext" ] || [ -z "$new_ext" ]; then
+    echo "Usage: $0 <directory> <matching_extension> <to_extension>"
+    exit 1
+fi
+
+if [ ! -d "$directory" ]; then
+    echo "Error: Directory not found!"
+    exit 1
+fi
+
+for file in "$directory"/*."$matching_ext"; do
+    if [ -f "$file" ]; then
+        new_name="${file%.*}.$new_ext"
+        mv "$file" "$new_name"
+        echo "Renamed: $file -> $new_name"
+    fi
+done
+
+echo "Done!"

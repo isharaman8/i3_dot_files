@@ -1,0 +1,10 @@
+
+[Unit]
+Description=Run ArcoLinux Update Weekly
+
+[Timer]
+OnCalendar=weekly
+Persistent=true
+
+[Install]
+WantedBy=timers.target

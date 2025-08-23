@@ -1,0 +1,7 @@
+
+[Unit]
+Description=Weekly ArcoLinux Update (User)
+
+[Service]
+Type=oneshot
+ExecStart=/home/amank/bin/update-arcolinux

@@ -1,0 +1,7 @@
+
+[Unit]
+Description=Auto organize Downloads
+
+[Service]
+Type=oneshot
+ExecStart=/home/amank/bin/organize

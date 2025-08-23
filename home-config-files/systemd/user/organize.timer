@@ -1,0 +1,10 @@
+
+[Unit]
+Description=Run Downloads organizer every hour
+
+[Timer]
+OnBootSec=5m
+OnUnitActiveSec=1h
+
+[Install]
+WantedBy=timers.target

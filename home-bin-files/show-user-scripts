@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# loop over files and print them
+
+echo "👉 User Created Scripts"
+echo ""
+
+count=1
+for file in ~/bin/*; do
+  if [ -f "$file" ]; then
+    echo "$count. $(basename "$file")"
+    ((count++))
+  fi
+done

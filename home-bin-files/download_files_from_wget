@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Ask user to input the file name
+read -p "Enter the path to the file containing URLs: " LINKS_FILE
+
+# Check if file exists
+if [[ ! -f "$LINKS_FILE" ]]; then
+  echo "❌ File not found: $LINKS_FILE"
+  exit 1
+fi
+
+# Create a folder to store downloads
+DOWNLOAD_DIR="downloads"
+mkdir -p "$DOWNLOAD_DIR"
+
+# Loop through each line in the file
+while IFS= read -r url; do
+  if [[ -n "$url" ]]; then
+    echo "Downloading $url..."
+    wget -P "$DOWNLOAD_DIR" "$url"
+  fi
+done < "$LINKS_FILE"
+
+echo "✅ All downloads completed. Files saved in ./$DOWNLOAD_DIR"
+
