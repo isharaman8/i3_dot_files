@@ -106,7 +106,7 @@ cd "$BACKUP_ROOT" || {
   exit 1
 }
 git add . >>"$LOG_FILE" 2>&1
-git commit -m "regular files update" >>"$LOG_FILE" 2>&1
+git commit -m "[AUTOMATED] regular files update" >>"$LOG_FILE" 2>&1
 git push -u origin arcolinux-branch >>"$LOG_FILE" 2>&1
 
 log "✅ Backup and git push completed"
