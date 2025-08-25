@@ -24,6 +24,8 @@ return {
       c = { "clang_format" },
       cpp = { "clang_format" },
       python = { "black" },
+      sh = { "shfmt" },
+      lua = { "stylua" },
     },
   },
 }

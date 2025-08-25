@@ -70,5 +70,30 @@ return {
         },
       },
     })
+
+    lspconfig.bashls.setup({
+      capabilities = capabilities,
+    })
+
+    lspconfig.lua_ls.setup({
+      capabilities = capabilities,
+      settings = {
+        Lua = {
+          runtime = {
+            version = "LuaJIT", -- Neovim uses LuaJIT
+          },
+          diagnostics = {
+            globals = { "vim" }, -- prevent "undefined global 'vim'" error
+          },
+          workspace = {
+            library = vim.api.nvim_get_runtime_file("", true),
+            checkThirdParty = false, -- avoid popup asking about third-party
+          },
+          telemetry = {
+            enable = false,
+          },
+        },
+      },
+    })
   end,
 }

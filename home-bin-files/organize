@@ -3,64 +3,79 @@ set -euo pipefail
 
 HOME_DIR="$HOME"
 DOWNLOADS=$(readlink -f "$HOME_DIR/Downloads")
-DOCS=$(readlink -f "$HOME_DIR/Documents")
-IMAGES=$(readlink -f "$HOME_DIR/Pictures")
-MUSIC=$(readlink -f "$HOME_DIR/Music")
-VIDEOS=$(readlink -f "$HOME_DIR/Videos")
 LOGFILE="$HOME_DIR/bin/logs/organize.log"
 
-# Ensure log file exists to avoid tee errors on first run
+# Ensure log file exists
 touch "$LOGFILE"
 
-mkdir -p "$DOCS" "$IMAGES" "$MUSIC" "$VIDEOS"
+# Arguments
+SRC="${1:-$DOWNLOADS}"           # default to Downloads if no source path
+DEST="${2:-$HOME_DIR/Documents}" # default to Documents if no dest
 
-# move_files_updated() {
-#   local dest="${!#}"
-#   local exts=("${@:1:$#-1}") # all arguments except the last are extensions
-#
-#
-#   for ext in "${exts[@]}"; do
-#     local directory_name =
-#   done
-# }
-#
+# Ensure destination folder exists
+mkdir -p "$DEST"
+
+move_docs() {
+  while IFS= read -r file; do
+    ext="${file##*.}"
+    ext_lower=$(echo "$ext" | tr '[:upper:]' '[:lower:]')
+
+    case "$ext_lower" in
+    iso)
+      folder="ISOS"
+      ;;
+    pdf)
+      folder="PDF"
+      ;;
+    doc | docx | odt)
+      folder="TXT"
+      ;;
+    txt)
+      folder="OTHERS"
+      ;;
+    *)
+      continue
+      ;;
+    esac
+
+    target="$DEST/$folder"
+    mkdir -p "$target"
+
+    if mv -v "$file" "$target"/ &>>"$LOGFILE"; then
+      echo "[OK] Moved: $file -> $target" | tee -a "$LOGFILE"
+    else
+      echo "[ERROR] Failed: $file -> $target" | tee -a "$LOGFILE"
+    fi
+  done < <(find "$SRC" -maxdepth 1 -type f \( -iname "*.iso" -o -iname "*.pdf" -o -iname "*.doc" -o -iname "*.docx" -o -iname "*.odt" -o -iname "*.txt" \))
+}
+
 move_files() {
-  local dest="${!#}"         # last argument is the destination
-  local exts=("${@:1:$#-1}") # all arguments except the last are extensions
+  local dest="$DEST"
+  local exts=("$@")
   local find_expr=()
 
-  # --- FIX START ---
-  # Build the find expression array with a proper "-o" (OR) between each extension
   for ext in "${exts[@]}"; do
     find_expr+=(-iname "*.${ext}" -o)
   done
+  unset 'find_expr[-1]'
 
-  # If the array has elements, remove the trailing "-o" from the last element
-  if [ ${#find_expr[@]} -gt 0 ]; then
-    unset 'find_expr[-1]'
-  else
-    # If no extensions were provided, do nothing.
-    echo "[INFO] No extensions provided for destination $dest" | tee -a "$LOGFILE"
-    return
-  fi
-  # --- FIX END ---
-
-  # The find command with proper grouping and process substitution
   while IFS= read -r file; do
     if mv -v "$file" "$dest"/ &>>"$LOGFILE"; then
       echo "[OK] Moved: $file -> $dest" | tee -a "$LOGFILE"
     else
       echo "[ERROR] Failed: $file -> $dest" | tee -a "$LOGFILE"
     fi
-    # Note the space after the opening parenthesis for the find expression
-  done < <(find "$DOWNLOADS" -maxdepth 1 -type f \( "${find_expr[@]}" \))
+  done < <(find "$SRC" -maxdepth 1 -type f \( "${find_expr[@]}" \))
 }
 
 echo "--- Starting file organization at $(date) ---" | tee -a "$LOGFILE"
 
-move_files pdf doc docx txt odt "$DOCS"
-move_files jpg jpeg png gif webp "$IMAGES"
-move_files mp3 wav ogg flac "$MUSIC"
-move_files mp4 mkv avi mov webm "$VIDEOS"
+# Determine if destination is Documents for special handling
+if [[ "$DEST" == "$HOME_DIR/Documents" ]]; then
+  move_docs
+else
+  # For other folders, move everything together without subfolders
+  move_files pdf doc docx txt odt jpg jpeg png gif webp mp3 wav ogg flac mp4 mkv avi mov webm iso
+fi
 
 echo "--- Finished file organization ---" | tee -a "$LOGFILE"

@@ -10,6 +10,7 @@ return {
       "html",
       "css",
       "python",
+      "bash",
     },
     highlight = {
       enable = true,

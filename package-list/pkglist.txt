@@ -328,6 +328,7 @@ screen
 sddm
 sdparm
 sg3_utils
+shfmt
 smartmontools
 sof-firmware
 sofirem-git
