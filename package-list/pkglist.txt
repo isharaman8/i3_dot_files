@@ -9,6 +9,9 @@ alsa-firmware
 alsa-lib
 alsa-plugins
 alsa-utils
+android-studio
+android-tools
+android-udev
 anytype-bin
 appstream
 arc-gtk-theme
@@ -310,6 +313,7 @@ python-pip
 python-pyparted
 python-pywal
 qbittorrent
+qemu-base
 qqc2-breeze-style
 ranger
 rate-mirrors-bin

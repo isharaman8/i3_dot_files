@@ -3,7 +3,7 @@ if status is-interactive
     neofetch
 
     # SET VARIABLES
-    set -gx PATH $HOME/.local/bin $PATH
+    # set -gx PATH $HOME/.local/bin $PATH
 
     # source all files in completions
     for f in ~/.config/fish/completions/*.fish

@@ -2,6 +2,7 @@ anytype-bin
 dbeaver-ce-bin
 github-desktop-bin
 k6-bin
+kinit
 neofetch
 redisinsight
 studio-3t
