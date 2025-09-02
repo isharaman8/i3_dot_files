@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+CONFIG_FILE="$HOME/bin/.ts-connect-users"
+
+# Ensure dependencies
+for cmd in fzf jq; do
+  if ! command -v "$cmd" &>/dev/null; then
+    echo "$cmd not found. Install it with: sudo pacman -S $cmd"
+    exit 1
+  fi
+done
+
+# Get Tailscale devices
+devices=$(tailscale status --json)
+
+# Parse into list: "dnsName (ip)" (strip trailing dot if present)
+list=$(echo "$devices" | jq -r '
+  .Peer | to_entries[] |
+  select(.value.Online == true) |
+  (.value.DNSName | sub("\\.$"; "")) + " (" + .value.TailscaleIPs[0] + ")"
+')
+
+if [[ -z "$list" ]]; then
+  echo "No online Tailscale devices found."
+  exit 1
+fi
+
+# Pick a device
+choice=$(echo "$list" | fzf --prompt="Select Tailscale device: ")
+
+# Normalize DNSName (strip trailing dot)
+dnsname=$(echo "$choice" | awk '{print $1}' | sed 's/\.$//')
+ip=$(echo "$choice" | sed -E 's/.*\(([^)]+)\).*/\1/')
+
+# Lookup username:port in config
+entry=$(grep -E "^${dnsname}=" "$CONFIG_FILE" 2>/dev/null | cut -d= -f2)
+
+# echo "$entry"
+# echo "$dnsname"
+# echo "$ip"
+#
+# If not found, ask and save
+if [[ -z "$entry" ]]; then
+  read -rp "Enter SSH username for $dnsname: " username
+  read -rp "Enter SSH port for $dnsname [default 22]: " port
+  port=${port:-22}
+  entry="${username}:${port}"
+  echo "${dnsname}=${entry}" >>"$CONFIG_FILE"
+fi
+
+username=$(echo "$entry" | cut -d: -f1)
+port=$(echo "$entry" | cut -d: -f2)
+
+# Connect
+echo "Connecting to $username@$ip (port $port) ..."
+ssh -p "$port" "${username}@${ip}"
