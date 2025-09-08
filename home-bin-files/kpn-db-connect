@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# === Config ===
+CLUSTER_NAME="kpn-staging-gke-cluster"
+REGION="asia-south1"
+PROJECT="kpn-staging-380605"
+
+# === Step 1: Authenticate with GKE ===
+echo "👉 Getting cluster credentials..."
+gcloud container clusters get-credentials "$CLUSTER_NAME" --region "$REGION" --project "$PROJECT"
+
+# === Step 2: List pods ===
+echo "👉 Fetching pods..."
+PODS=($(kubectl get po --no-headers -o custom-columns=":metadata.name"))
+
+if [ ${#PODS[@]} -eq 0 ]; then
+  echo "❌ No pods found!"
+  exit 1
+fi
+
+echo ""
+echo "Available pods:"
+select POD_NAME in "${PODS[@]}"; do
+  if [ -n "$POD_NAME" ]; then
+    echo "👉 Executing into pod: $POD_NAME"
+    kubectl exec -it "$POD_NAME" -- bash -c \
+      "PGPASSWORD=\"%2E)cG[z49k#PG#w\" psql -h commerce01.postgres.commerce.internal. -U dev-read-user purchase-transfer"
+    break
+  else
+    echo "❌ Invalid selection. Try again."
+  fi
+done
+
+
+
+which line is expecting input here? 
