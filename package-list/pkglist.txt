@@ -453,7 +453,6 @@ yad
 yay-git
 zen-browser-bin
 zip
-zoom
 zsh
 zsh-completions
 zsh-syntax-highlighting
