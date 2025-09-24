@@ -84,7 +84,7 @@ cryptsetup
 cups
 cups-filters
 cups-pdf
-dbeaver-ce-bin
+dbeaver
 ddrescue
 dex
 dialog
@@ -159,7 +159,9 @@ intel-ucode
 inxi
 iw
 iwd
+jdk21-openjdk
 jfsutils
+jre-openjdk
 k6-bin
 kactivitymanagerd
 kde-cli-tools
@@ -306,7 +308,6 @@ pulseaudio-alsa
 pulseaudio-bluetooth
 pulsemixer
 pv
-pycharm-community-edition
 pyenv
 python-black
 python-pip
