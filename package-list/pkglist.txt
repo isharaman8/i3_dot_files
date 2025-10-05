@@ -84,6 +84,7 @@ cryptsetup
 cups
 cups-filters
 cups-pdf
+cursor-bin
 dbeaver
 ddrescue
 dex
@@ -339,6 +340,7 @@ sof-firmware
 sofirem-git
 squashfs-tools
 stacer
+steam
 studio-3t
 sublime-text-4
 sudo
