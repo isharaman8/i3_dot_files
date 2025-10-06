@@ -167,6 +167,7 @@ k6-bin
 kactivitymanagerd
 kde-cli-tools
 kdecoration
+kdenlive
 kdeplasma-addons
 kgamma
 kglobalacceld
