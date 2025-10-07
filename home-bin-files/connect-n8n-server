@@ -1,0 +1,5 @@
+#!/bin/bash
+
+chmod 400 "$HOME/bin/pem-keys/n8n-key-1.pem"
+
+ssh -i "$HOME/bin/pem-keys/n8n-key-1.pem" ubuntu@ec2-98-90-40-64.compute-1.amazonaws.com
