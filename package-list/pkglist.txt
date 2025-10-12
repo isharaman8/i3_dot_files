@@ -58,6 +58,7 @@ ast-firmware
 audiocd-kio
 autotiling
 avahi
+aws-cli
 base
 base-devel
 bash-completion
