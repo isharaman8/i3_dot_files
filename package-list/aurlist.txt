@@ -11,6 +11,5 @@ libdbusmenu-gtk2
 neofetch
 nitrogen
 redisinsight
-studio-3t
 toptracker
 xautolock

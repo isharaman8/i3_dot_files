@@ -1,5 +1,4 @@
 # fonts config
-
 [font]
 size = 8.0
 
@@ -54,7 +53,7 @@ white   = "#ffffff"
 # window (opacity, scrolling etc)
 
 [window]
-opacity = 0.8
+opacity = 1
 
 [scrolling]
 history = 50000

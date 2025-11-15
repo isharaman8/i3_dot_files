@@ -343,7 +343,6 @@ sofirem-git
 squashfs-tools
 stacer
 steam
-studio-3t
 sublime-text-4
 sudo
 surfn-plasma-dark-icons-git
