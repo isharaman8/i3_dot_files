@@ -10,6 +10,7 @@ libappindicator-gtk2
 libdbusmenu-gtk2
 neofetch
 nitrogen
+qt5-charts
 redisinsight
 toptracker
 xautolock
