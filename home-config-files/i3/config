@@ -14,7 +14,9 @@ set $mod1 Mod1
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:Droid Sans Mono 11
+# font pango:Hack 11
+
+font pango:JetBrainsMono Nerd Font 11
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -60,8 +62,14 @@ bindsym $mod+q kill
 # start dmenu (a program launcher)
 #bindsym $mod+d exec --no-startup-id dmenu_run
 
-bindsym $mod+d exec sh /home/amank/.config/rofi/launchers/type-3/launcher.sh
+# bindsym $mod+d exec $HOME/.config/rofi/launchers/type-3/launcher.sh
+#
+# Replace your current bindsym line with this (full path; use bash -lc so profile is loaded)
+# bindsym $mod+d exec --no-startup-id /bin/bash -lc '$HOME/.config/rofi/launchers/type-3/launcher.sh'
 
+# bindsym $mod+d exec --no-startup-id /home/amank/bin/rofi-bin-launcher.sh
+# replace your existing bindsym for rofi with this:
+bindsym $mod+d exec --no-startup-id /bin/bash -lc '$HOME/.config/rofi/launchers/type-3/launcher.sh'
 # clipboard history
 bindsym $mod+c exec rofi -modi "clipboard:greenclip print" -show clipboard
 
@@ -363,16 +371,16 @@ mode "resize" {
 }
 
 
-# Window Colors
-set $bgcolor 	#00897b33
-set $fws 	#00897b80
-set $barcolor   #00897b0D
-set $ibgcolor   #363636
-set $textcolor  #ffffff
-set $ubgcolor   #ff0000
-set $itextcolor #969696
+# Retro Window Colors
+set $bgcolor      #2b2b2b           # window bg (dark warm)
+set $fws          #7f8a6a           # focused window border (retro green)
+set $barcolor     #1f1f1f           # bar background (dark matte)
+set $ibgcolor     #3a3a3a           # inactive background
+set $textcolor    #e2d8b2           # vintage terminal text (warm cream)
+set $ubgcolor     #d07f57           # urgent alert (burnt orange, retro highlight)
+set $itextcolor   #9a9477           # inactive text (desaturated warm tone)
 
-# Nord colours
+# Original Nord set kept for reference but not used
 set $nord0   #2E3440
 set $nord1   #3B4252
 set $nord2   #434C5E
@@ -390,12 +398,47 @@ set $nord13  #EBCB8B
 set $nord14  #A3BE8C
 set $nord15  #B48EAD
 
-#			border 		background		text 		indicator
-client.focused  	$nord5        	$nord3                $textcolor      	$nord6	
-client.unfocused        $ibgcolor       $ibgcolor               $itextcolor      $ibgcolor
-client.focused_inactive $ibgcolor       $ibgcolor               $itextcolor      $ibgcolor
-client.urgent           $ubgcolor       $ubgcolor               $textcolor      $ubgcolor
 
+
+# Window Borders (retro)
+client.focused          #7f8a6a     #2b2b2b     #e2d8b2     #9cb07a
+client.unfocused        #3a3a3a     #3a3a3a     #9a9477     #3a3a3a
+client.focused_inactive #3a3a3a     #3a3a3a     #9a9477     #3a3a3a
+client.urgent           #d07f57     #d07f57     #e2d8b2     #d07f57
+
+# # Window Colors
+# set $bgcolor 	#00897b33
+# set $fws 	#00897b80
+# set $barcolor   #00897b0D
+# set $ibgcolor   #363636
+# set $textcolor  #ffffff
+# set $ubgcolor   #ff0000
+# set $itextcolor #969696
+#
+# # Nord colours
+# set $nord0   #2E3440
+# set $nord1   #3B4252
+# set $nord2   #434C5E
+# set $nord3   #4C566A
+# set $nord4   #D8DEE9
+# set $nord5   #E5E9F0
+# set $nord6   #ECEFF4
+# set $nord7   #8FBCBB
+# set $nord8   #88C0D0
+# set $nord9   #81A1C1
+# set $nord10  #5E81AC
+# set $nord11  #BF616A
+# set $nord12  #D08770
+# set $nord13  #EBCB8B
+# set $nord14  #A3BE8C
+# set $nord15  #B48EAD
+#
+# #			border 		background		text 		indicator
+# client.focused  	$nord5        	$nord3                $textcolor      	$nord6	
+# client.unfocused        $ibgcolor       $ibgcolor               $itextcolor      $ibgcolor
+# client.focused_inactive $ibgcolor       $ibgcolor               $itextcolor      $ibgcolor
+# client.urgent           $ubgcolor       $ubgcolor               $textcolor      $ubgcolor
+#
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
@@ -417,7 +460,7 @@ client.urgent           $ubgcolor       $ubgcolor               $textcolor      
 
 #Display Wallpaper
 # exec_always feh --bg-fill /usr/share/backgrounds/nordic-wallpapers/ign_nordic_triangle.png
-exec_always nitrogen --restore
+exec --no-startup-id nitrogen --restore
 # exec_always variety
 
 # variety config
