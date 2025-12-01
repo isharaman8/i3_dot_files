@@ -307,6 +307,7 @@ tumbler
 udftools
 udiskie
 udisks2
+ueberzugpp
 unace
 unrar
 unzip
