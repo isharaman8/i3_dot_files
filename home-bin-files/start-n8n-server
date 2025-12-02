@@ -1,0 +1,1 @@
+cd "$HOME/Projects/personal-n8n-workflows/" && npm run start

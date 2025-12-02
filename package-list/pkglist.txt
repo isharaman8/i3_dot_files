@@ -158,6 +158,7 @@ kinit
 laptop-detect
 ldns
 less
+lib32-opencl-nvidia
 libdvdcss
 libfido2
 libgsf
@@ -215,9 +216,12 @@ nss-mdns
 ntfs-3g
 ntp
 nvidia-dkms
+nvidia-prime
+nvidia-settings
 nvme-cli
 oh-my-zsh-git
 open-iscsi
+opencl-nvidia
 openconnect
 openssh
 openvpn
