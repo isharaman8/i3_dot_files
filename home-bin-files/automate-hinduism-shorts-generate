@@ -1,0 +1,5 @@
+#! /bin/bash
+
+cd "$HOME/bin/scripts" || exit
+
+npm run shorts:generate

@@ -6,6 +6,7 @@ return {
   config = function()
     local lspconfig = require("lspconfig")
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
+    -- local util = require("lspconfig.util")
 
     -- 🔧 Global Diagnostic Settings
     vim.diagnostic.config({
@@ -95,5 +96,22 @@ return {
         },
       },
     })
+
+    -- local function lsp_on_attach(client, bufnr)
+    --   -- optional: show hover on CursorHold
+    --   -- vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+    -- end
+    --
+    -- lspconfig.eslint.setup({
+    --   capabilities = capabilities,
+    --   -- on_attach = lsp_on_attach,
+    --   -- optional: make eslint server start in project roots only
+    --   root_dir = function(fname)
+    --     return util.root_pattern(".eslintrc*", "package.json", ".git")(fname)
+    --   end,
+    --   settings = {
+    --     -- keep default behavior; you can tune rules here if needed
+    --   },
+    -- })
   end,
 }
