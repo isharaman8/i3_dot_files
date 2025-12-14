@@ -235,6 +235,7 @@ for_window [class="^.*"] border pixel 2
 gaps inner 5
 gaps outer 5
 gaps top 0
+
 mode "$mode_gaps" {
    bindsym o      mode "$mode_gaps_outer"
       bindsym i      mode "$mode_gaps_inner"
