@@ -1,0 +1,7 @@
+#! /bin/bash
+
+cd "$HOME/bin/scripts/py-random-movement" || exit
+
+source venv/bin/activate
+
+python3 random-mouse-movement.py

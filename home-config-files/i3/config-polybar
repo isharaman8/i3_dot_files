@@ -160,6 +160,7 @@ mode "$mode_system" {
 # ArcoLinux Logout
 bindsym $mod+Shift+e exec --no-startup-id archlinux-logout
 bindsym $mod+X exec --no-startup-id archlinux-logout
+bindsym $mod+Shift+X exec --no-startup-id arcolinux-powermenu
 
 ################# reload changed configuration     
 
@@ -305,7 +306,7 @@ font pango:Noto Mono Regular 13
 
 # Workspace 2 text editor related
 # assign [class="sublime-text|sublime_text|Sublime_text|subl|Subl|subl3|Subl3"]       → 2
-# assign [class="Xed|xed|Brackets|Atom|Code|Geany"]                                   → 2
+# assign [class="Xed|xed|Brackets|Code|Code|Geany"]                                   → 2
 
 # Workspace 3 Inkscape
 # assign [class="Inkscape"]                                                           → 3
@@ -351,7 +352,7 @@ for_window [class="Vivaldi-stable"] focus
 
 # Text-editor
 # exec --no-startup-id geany
-# exec --no-startup-id atom
+# exec --no-startup-id code
 
 # File manager
 # exec --no-startup-id thunar
@@ -404,7 +405,7 @@ exec --no-startup-id conky -c ~/.config/i3/system-overview
 
 # feh sets wallpaper
 exec --no-startup-id feh --bg-fill /usr/share/backgrounds/archlinux/arch-wallpaper.jpg &
-exec --no-startup-id feh --bg-fill /usr/share/backgrounds/arcolinux/arco-wallpaper.jpg &
+exec --no-startup-id feh --bg-fill /usr/share/backgrounds/arco/arco-wallpaper.jpg &
 # for other Arch Linux based distros
 # exec --no-startup-id feh --bg-fill /usr/share/archlinux-tweak-tool/data/wallpaper/wallpaper.png &
 
@@ -490,7 +491,7 @@ bindsym control+mod1+g exec --no-startup-id chromium;focus
 
 # Text Editor
 # bindsym $mod+F2 exec --no-startup-id geany;focus
-bindsym $mod+F2 exec --no-startup-id atom;focus
+bindsym $mod+F2 exec --no-startup-id code;focus
 
 # Basic Draw Tool
 bindsym $mod+F3 exec --no-startup-id inkscape;focus
@@ -515,8 +516,8 @@ bindsym $mod+Shift+Return exec --no-startup-id thunar;focus
 bindsym $mod+Shift+KP_Enter exec --no-startup-id thunar;focus
 bindsym control+mod1+b exec --no-startup-id thunar;focus
 
-# mail application
-bindsym $mod+F9 exec --no-startup-id evolution;focus
+# Audio application
+bindsym $mod+F9 exec --no-startup-id lollypop;focus
 # bindsym $mod+F9 exec --no-startup-id geary;focus
 # bindsym control+mod1+e exec --no-startup-id geary;focus
 
