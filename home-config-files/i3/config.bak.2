@@ -409,7 +409,7 @@ exec --no-startup-id feh --bg-fill /usr/share/backgrounds/arcolinux/arco-wallpap
 # exec --no-startup-id feh --bg-fill /usr/share/archlinux-tweak-tool/data/wallpaper/wallpaper.png &
 
 # Polybar
-exec_always --no-startup-id ~/.config/polybar/launch.sh &
+# exec_always --no-startup-id ~/.config/polybar/launch.sh &
 
 ################# system applications       
 
@@ -727,20 +727,90 @@ bindsym control+mod1+o exec --no-startup-id ~/.config/i3/scripts/picom-toggle.sh
 
 ################# bar appearance                   
 
-##START THEMING WM
-# Theme name : ArcoLinux Default
+bar {
+    height 25
+    workspace_buttons yes
+	font pango:Noto Sans 12
+	# position top
+    position bottom
 
-# Window color settings
-# class                 border  backgr. text    indicator
-client.focused          #6790EB #6790EB #e5e5e5 #6790EB
-client.unfocused        #222222 #222222 #aaaaaa #222222
-client.focused_inactive #222222 #222222 #a9a9a9 #222222
-client.placeholder      #222222 #222222 #aaaaaa #222222
-client.urgent           #d42121 #d42121 #f7f7f7 #d42121
+	# system icons
+    # tray_output none
+    # tray_output $firstMonitor
+    # tray_output $secondMonitor
 
-client.background       #242424
+    # OPTION 1 : i3status
 
-##STOP THEMING WM
+    # type status_command i3status without the config file and
+    # you will get the standard i3status bar
+    # Second one is the standard statusbar with my personal settings
+
+	# status_command i3status
+    status_command i3status -c ~/.config/i3/i3status.conf
+
+    # OPTION 2 : i3blocks
+
+    # https://github.com/vivien/i3blocks
+    # another way to provide text in the statusbar
+    # put hastag in front if not installed
+
+    # status_command i3blocks
+    # status_command i3blocks -c ~/.config/i3/i3blocks.conf
+    # status_command i3blocks -c ~/.config/i3/i3blocks-rainbow.conf
+    # status_command i3blocks -c ~/.config/i3/i3blocks-original.conf
+    # status_command i3blocks -c ~/.config/i3/i3blocks-awesome.conf
+
+
+    # OPTION 3 : conky
+
+    # You can also replace the istatus bar with a conky
+    # start-conky-i3statusbar.sh is started and conky will follow
+    # documentation : https://i3wm.org/docs/user-contributed/conky-i3bar.html
+    # conky configuration is in conky-i3statusbar
+
+	# status_command ~/.config/i3/start-conky-i3statusbar.sh
+
+    # OPTION 4 : polybar
+
+    # polybar is launched elsewhere - search for the word
+    # from the opening of the "bar {...}" till the end has to go or hashtagged out
+    # in order for the system trayicons to show up in polybar
+
+    ##START THEMING BAR
+    # Theme name : ArcoLinux Default
+
+    # i3 bar colors
+    # variable border background Text
+
+    colors {
+        background #2F2F2F
+        statusline #eeeeee
+        separator  #666666
+
+        # colorclass           border  backgr. text
+        focused_workspace     #a9a9a9 #5f676a #eeeeee
+        active_workspace      #a9a9a9 #5f676a #eeeeee
+        inactive_workspace    #a9a9a9 #222222 #a9a9a9
+        urgent_workspace      #a9a9a9 #d42121 #FFFFFF
+        }
+
+    }
+    ##STOP THEMING BAR
+
+    ##START THEMING WM
+    # Theme name : ArcoLinux Default
+
+    # Window color settings
+    # class                 border  backgr. text    indicator
+    client.focused          #6790EB #6790EB #e5e5e5 #6790EB
+    client.unfocused        #222222 #222222 #aaaaaa #222222
+    client.focused_inactive #222222 #222222 #a9a9a9 #222222
+    client.placeholder      #222222 #222222 #aaaaaa #222222
+    client.urgent           #d42121 #d42121 #f7f7f7 #d42121
+
+    client.background       #242424
+
+    ##STOP THEMING WM
 
 ######################################## THE END 
 

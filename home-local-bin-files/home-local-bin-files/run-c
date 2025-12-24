@@ -1,0 +1,28 @@
+
+#!/bin/bash
+
+# Check if a filename is provided
+if [ -z "$1" ]; then
+  echo "Usage: ./run.sh <filename-without-extension>"
+  exit 1
+fi
+
+FILENAME=$1
+SRC="$FILENAME"
+OUT="$FILENAME.out"
+
+# Compile the C program
+gcc -Wall -Wextra -o "$OUT" "$SRC"
+
+# Check if compilation succeeded
+if [ $? -eq 0 ]; then
+  echo "✅ Compilation successful. Running the program:"
+  echo "---------------------------------------------"
+  echo "
+
+
+  "
+  ./"$OUT"
+else
+  echo "❌ Compilation failed."
+fi

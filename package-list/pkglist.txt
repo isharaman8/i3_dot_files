@@ -81,6 +81,7 @@ btop
 btrfs-progs
 clipman
 clonezilla
+conky
 cryfs
 cryptsetup
 cups
@@ -333,6 +334,7 @@ reflector
 reflector-simple
 ripgrep
 ristretto
+rofi
 rofi-greenclip
 rp-pppoe
 rsync

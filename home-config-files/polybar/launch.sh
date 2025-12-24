@@ -1,235 +1,81 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-# More info : https://github.com/jaagr/polybar/wiki
+dir="$HOME/.config/polybar"
+themes=(`ls --hide="launch.sh" $dir`)
 
-# Install the following applications for polybar and icons in polybar if you are on ArcoLinuxD
-# awesome-terminal-fonts
-# Tip : There are other interesting fonts that provide icons like nerd-fonts-complete
-# --log=error
-# Terminate already running bar instances
-killall -q polybar
+launch_bar() {
+	# Terminate already running bar instances
+	killall -q polybar
 
-# Wait until the processes have been shut down
-while pgrep -u $UID -x polybar > /dev/null; do sleep 1; done
+	# Wait until the processes have been shut down
+	while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
-desktop=$(echo $DESKTOP_SESSION)
-count=$(xrandr --query | grep " connected" | cut -d" " -f1 | wc -l)
+	# Launch the bar
+	if [[ "$style" == "hack" || "$style" == "cuts" ]]; then
+		polybar -q top -c "$dir/$style/config.ini" &
+		polybar -q bottom -c "$dir/$style/config.ini" &
+	elif [[ "$style" == "pwidgets" ]]; then
+		bash "$dir"/pwidgets/launch.sh --main
+	else
+		polybar -q main -c "$dir/$style/config.ini" &	
+	fi
+}
 
+if [[ "$1" == "--material" ]]; then
+	style="material"
+	launch_bar
 
-case $desktop in
+elif [[ "$1" == "--shades" ]]; then
+	style="shades"
+	launch_bar
 
-    i3|/usr/share/xsessions/i3)
-    if type "xrandr" > /dev/null; then
-      for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-        MONITOR=$m polybar --reload mainbar-i3 -c ~/.config/polybar/config.ini &
-      done
-    else
-    polybar --reload mainbar-i3 -c ~/.config/polybar/config.ini &
-    fi
-    # second polybar at bottom
-    # if type "xrandr" > /dev/null; then
-    #   for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-    #     MONITOR=$m polybar --reload mainbar-i3-extra -c ~/.config/polybar/config.ini &
-    #   done
-    # else
-    # polybar --reload mainbar-i3-extra -c ~/.config/polybar/config.ini &
-    # fi
-    ;;
+elif [[ "$1" == "--hack" ]]; then
+	style="hack"
+	launch_bar
 
-    openbox|/usr/share/xsessions/openbox)
-    if type "xrandr" > /dev/null; then
-      for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-        MONITOR=$m polybar --reload mainbar-openbox -c ~/.config/polybar/config.ini &
-      done
-    else
-    polybar --reload mainbar-openbox -c ~/.config/polybar/config.ini &
-    fi
-    # second polybar at bottom
-    # if type "xrandr" > /dev/null; then
-    #   for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-    #     MONITOR=$m polybar --reload mainbar-openbox-extra -c ~/.config/polybar/config.ini &
-    #   done
-    # else
-    # polybar --reload mainbar-openbox-extra -c ~/.config/polybar/config.ini &
-    # fi
-    ;;
+elif [[ "$1" == "--docky" ]]; then
+	style="docky"
+	launch_bar
 
-    bspwm|/usr/share/xsessions/bspwm)
-    if type "xrandr" > /dev/null; then
-      for m in $(bspc query -M --names); do
-        MONITOR=$m polybar --reload mainbar-bspwm -c ~/.config/polybar/config.ini &
-      done
-    else
-    polybar --reload mainbar-bspwm -c ~/.config/polybar/config.ini &
-    fi
-    # second polybar at bottom
-    # if type "xrandr" > /dev/null; then
-    #   for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-    #     MONITOR=$m polybar --reload mainbar-bspwm-extra -c ~/.config/polybar/config.ini &
-    #   done
-    # else
-    # polybar --reload mainbar-bspwm-extra -c ~/.config/polybar/config.ini &
-    # fi
-    ;;
+elif [[ "$1" == "--cuts" ]]; then
+	style="cuts"
+	launch_bar
 
-    herbstluftwm|/usr/share/xsessions/herbstluftwm)
-    if type "xrandr" > /dev/null; then
-      for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-        MONITOR=$m polybar --reload mainbar-herbstluftwm -c ~/.config/polybar/config.ini &
-      done
-    else
-    polybar --reload mainbar-herbstluftwm -c ~/.config/polybar/config.ini &
-    fi
-    # second polybar at bottom
-    # if type "xrandr" > /dev/null; then
-    #   for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-    #     MONITOR=$m polybar --reload mainbar-herbstluftwm-extra -c ~/.config/polybar/config.ini &
-    #   done
-    # else
-    # polybar --reload mainbar-herbstluftwm-extra -c ~/.config/polybar/config.ini &
-    # fi
-    ;;
+elif [[ "$1" == "--shapes" ]]; then
+	style="shapes"
+	launch_bar
 
-    worm|/usr/share/xsessions/worm)
-    if type "xrandr" > /dev/null; then
-      for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-        MONITOR=$m polybar --reload mainbar-worm -c ~/.config/polybar/config.ini &
-      done
-    else
-    polybar --reload mainbar-worm -c ~/.config/polybar/config.ini &
-    fi
-    # second polybar at bottom
-    # if type "xrandr" > /dev/null; then
-    #   for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-    #     MONITOR=$m polybar --reload mainbar-worm-extra -c ~/.config/polybar/config.ini &
-    #   done
-    # else
-    # polybar --reload mainbar-worm-extra -c ~/.config/polybar/config.ini &
-    # fi
-    ;;
+elif [[ "$1" == "--grayblocks" ]]; then
+	style="grayblocks"
+	launch_bar
 
-    berry|/usr/share/xsessions/berry)
-    if type "xrandr" > /dev/null; then
-      for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-        MONITOR=$m polybar --reload mainbar-berry -c ~/.config/polybar/config.ini &
-      done
-    else
-    polybar --reload mainbar-berry -c ~/.config/polybar/config.ini &
-    fi
-    # second polybar at bottom
-    # if type "xrandr" > /dev/null; then
-    #   for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-    #     MONITOR=$m polybar --reload mainbar-berry-extra -c ~/.config/polybar/config.ini &
-    #   done
-    # else
-    # polybar --reload mainbar-berry-extra -c ~/.config/polybar/config.ini &
-    # fi
-    ;;
+elif [[ "$1" == "--blocks" ]]; then
+	style="blocks"
+	launch_bar
 
-    xmonad|/usr/share/xsessions/xmonad)
-    if [ $count = 1 ]; then
-      m=$(xrandr --query | grep " connected" | cut -d" " -f1)
-      MONITOR=$m polybar --reload mainbar-xmonad -c ~/.config/polybar/config.ini &
-    else
-      for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-        MONITOR=$m polybar --reload mainbar-xmonad -c ~/.config/polybar/config.ini &
-      done
-    fi
-    # second polybar at bottom
-    # if [ $count = 1 ]; then
-    #   m=$(xrandr --query | grep " connected" | cut -d" " -f1)
-    #   MONITOR=$m polybar --reload mainbar-xmonad-extra -c ~/.config/polybar/config.ini &
-    # else
-    #   for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-    #     MONITOR=$m polybar --reload mainbar-xmonad-extra -c ~/.config/polybar/config.ini &
-    #   done
-    # fi
-    ;;
+elif [[ "$1" == "--colorblocks" ]]; then
+	style="colorblocks"
+	launch_bar
 
-    spectrwm|/usr/share/xsessions/spectrwm)
-    if type "xrandr" > /dev/null; then
-      for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-        MONITOR=$m polybar --reload mainbar-spectrwm -c ~/.config/polybar/config.ini &
-      done
-    else
-    polybar --reload mainbar-spectrwm -c ~/.config/polybar/config.ini &
-    fi
-    ;;
+elif [[ "$1" == "--forest" ]]; then
+	style="forest"
+	launch_bar
 
-    cwm|/usr/share/xsessions/cwm)
-    if type "xrandr" > /dev/null; then
-      for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-        MONITOR=$m polybar --reload mainbar-cwm -c ~/.config/polybar/config.ini &
-      done
-    else
-    polybar --reload mainbar-cwm -c ~/.config/polybar/config.ini &
-    fi
+elif [[ "$1" == "--pwidgets" ]]; then
+	style="pwidgets"
+	launch_bar
 
-     # second polybar at bottom
-     # if type "xrandr" > /dev/null; then
-     #  for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-     #    MONITOR=$m polybar --reload mainbar-cwm-extra -c ~/.config/polybar/config.ini &
-     #  done
-     # else
-     # polybar --reload mainbar-cwm-extra -c ~/.config/polybar/config.ini &
-     # fi
+elif [[ "$1" == "--panels" ]]; then
+	style="panels"
+	launch_bar
 
-    ;;
-
-    fvwm3|/usr/share/xsessions/fvwm3)
-    if type "xrandr" > /dev/null; then
-      for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-        MONITOR=$m polybar --reload mainbar-fvwm3 -c ~/.config/polybar/config.ini &
-      done
-    else
-    polybar --reload mainbar-fvwm3 -c ~/.config/polybar/config.ini &
-    fi
-
-     # second polybar at bottom
-     # if type "xrandr" > /dev/null; then
-     #  for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-     #    MONITOR=$m polybar --reload mainbar-fvwm3-extra -c ~/.config/polybar/config.ini &
-     #  done
-     # else
-     # polybar --reload mainbar-fvwm3-extra -c ~/.config/polybar/config.ini &
-     # fi
-
-    ;;
-
-    wmderland|/usr/share/xsessions/wmderland)
-    if type "xrandr" > /dev/null; then
-      for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-        MONITOR=$m polybar --reload mainbar-wmderland -c ~/.config/polybar/config.ini &
-      done
-    else
-    polybar --reload mainbar-wmderland -c ~/.config/polybar/config.ini &
-    fi
-    # second polybar at bottom
-    # if type "xrandr" > /dev/null; then
-    #   for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-    #     MONITOR=$m polybar --reload mainbar-wmderland-extra -c ~/.config/polybar/config.ini &
-    #   done
-    # else
-    # polybar --reload mainbar-wmderland-extra -c ~/.config/polybar/config.ini &
-    # fi
-    ;;
-
-    leftwm|/usr/share/xsessions/leftwm)
-    if type "xrandr" > /dev/null; then
-      for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-        MONITOR=$m polybar --reload mainbar-leftwm -c ~/.config/polybar/config.ini &
-      done
-    else
-    polybar --reload mainbar-leftwm -c ~/.config/polybar/config.ini &
-    fi
-    # second polybar at bottom
-    # if type "xrandr" > /dev/null; then
-    #   for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
-    #     MONITOR=$m polybar --reload mainbar-leftwm-extra -c ~/.config/polybar/config.ini &
-    #   done
-    # else
-    # polybar --reload mainbar-leftwm-extra -c ~/.config/polybar/config.ini &
-    # fi
-    ;;
-
-esac
+else
+	cat <<- EOF
+	Usage : launch.sh --theme
+		
+	Available Themes :
+	--blocks    --colorblocks    --cuts      --docky
+	--forest    --grayblocks     --hack      --material
+	--panels    --pwidgets       --shades    --shapes
+	EOF
+fi

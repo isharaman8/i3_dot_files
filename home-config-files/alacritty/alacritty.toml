@@ -1,52 +1,85 @@
-[colors.bright]
-black = "#545454"
-blue = "#94bff3"
-cyan = "#93e0e3"
-green = "#8ae234"
-magenta = "#b294bb"
-red = "#fc5454"
-white = "#ffffff"
-yellow = "#fce94f"
-
-[colors.normal]
-black = "#3f3f3f"
-blue = "#94bff3"
-cyan = "#06989a"
-green = "#4e9a06"
-magenta = "#85678f"
-red = "#cc0000"
-white = "#dcdccc"
-yellow = "#c4a000"
-
-[colors.primary]
-background = "#222222"
-foreground = "#F9F9F9"
-
+# fonts config
 [font]
-size = 11.0
+size = 8.0
 
 [font.bold]
-family = "hack"
+family = "JetBrainsMono Nerd Font"
 style = "Bold"
 
 [font.bold_italic]
-family = "monospace"
+family = "JetBrainsMono Nerd Font"
 style = "Bold Italic"
 
 [font.italic]
-family = "hack"
+family = "JetBrainsMono Nerd Font"
 style = "Italic"
 
 [font.normal]
-family = "hack"
+family = "JetBrainsMono Nerd Font"
 style = "Regular"
+
+
+
+# keyboard bindings
 
 [[keyboard.bindings]]
 action = "ToggleFullscreen"
 key = "F11"
 
+
+[colors.primary]
+background = "#0b0b0c"     # nearly-black to match starry background
+foreground = "#e8e3cf"     # soft parchment, slightly warm
+
+[colors.normal]
+black   = "#0d0d0d"
+red     = "#c85a5f"        # muted/maple red
+green   = "#6b8a78"        # desaturated pine green
+yellow  = "#c39b49"        # warm ginkgo gold
+blue    = "#3b5b86"        # cloudy sky, darker
+magenta = "#8f5960"        # plum, muted
+cyan    = "#6b8f8b"        # koi pond teal, muted
+white   = "#cfc9b7"        # softer white for normal text
+
+[colors.bright]
+black   = "#2b2b2b"
+red     = "#e06f74"
+green   = "#8fb18f"
+yellow  = "#ffcf7f"
+blue    = "#74a1d9"
+magenta = "#c99bb0"
+cyan    = "#8fd6df"
+white   = "#ffffff"
+
+# [colors.primary]
+# background = "#1f1f1f"     # Deep neutral black
+# foreground = "#e9e3d0"     # Soft parchment white
+#
+# [colors.normal]
+# black   = "#1c1c1c"
+# red     = "#e05f65"        # Maple leaf red
+# green   = "#7d9d83"        # Faded pine green
+# yellow  = "#d6a657"        # Ginkgo gold
+# blue    = "#4f6fa1"        # Cloudy sky blue
+# magenta = "#a4707a"        # Plum blossom pink
+# cyan    = "#7fa5a3"        # Koi pond teal
+# white   = "#dcd6c4"
+#
+# [colors.bright]
+# black   = "#3a3a3a"
+# red     = "#f07178"
+# green   = "#98c379"
+# yellow  = "#ffcb6b"
+# blue    = "#82aaff"
+# magenta = "#d291bc"
+# cyan    = "#89ddff"
+# white   = "#ffffff"
+#
+# window (opacity, scrolling etc)
+
+[window]
+opacity = 1
+
 [scrolling]
 history = 50000
 
-[window]
-opacity = 0.8
