@@ -282,7 +282,7 @@ partimage
 paru-git
 pavucontrol
 pcsclite
-picom-git
+picom
 pkgfile
 plasma-activities-stats
 plasma-browser-integration

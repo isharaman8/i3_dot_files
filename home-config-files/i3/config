@@ -494,7 +494,7 @@ for_window [class="VirtualBox Machine"] floating enable, border normal
 
 
 #Compositor
-# exec_always picom --config home/amank/.config/picom/picom.conf
+exec --no-startup-id picom --config $HOME/.config/picom/picom.conf
 #exec_always plank
 
 #Increase/Decrease Screen brightness
