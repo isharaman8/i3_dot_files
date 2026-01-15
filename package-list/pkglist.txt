@@ -399,7 +399,6 @@ visual-studio-code-bin
 volumeicon
 vpnc
 wacomtablet
-waybar-git
 wd719x-firmware
 wget
 wireguard-tools

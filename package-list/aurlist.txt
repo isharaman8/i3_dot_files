@@ -9,6 +9,7 @@ k6-bin
 kinit
 libappindicator-gtk2
 libdbusmenu-gtk2
+libgnome-keyring
 neofetch
 nitrogen
 qt5-charts
