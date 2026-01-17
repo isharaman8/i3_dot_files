@@ -232,8 +232,8 @@ bindsym $mod+Shift+g mode "$mode_gaps"
 for_window [class="^.*"] border pixel 2
 
 #set inner / outer gaps
-gaps inner 5
-gaps outer 5
+gaps inner 0
+gaps outer 0
 gaps top 0
 
 mode "$mode_gaps" {
