@@ -101,6 +101,10 @@ dnsmasq
 docker
 dolphin-plugins
 dosfstools
+dotnet-host
+dotnet-runtime-8.0
+dotnet-sdk-8.0
+dotnet-targeting-pack-8.0
 downgrade
 drkonqi
 duf
@@ -233,6 +237,7 @@ mkinitcpio-openswap
 mobile-broadband-provider-info
 modemmanager
 mongodb-compass
+mono-msbuild
 most
 mtools
 mtpfs
@@ -241,6 +246,7 @@ nbd
 ndisc6
 neofetch
 neovim
+netstandard-targeting-pack
 network-manager-applet
 networkmanager
 networkmanager-openconnect
