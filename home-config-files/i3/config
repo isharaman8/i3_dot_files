@@ -69,7 +69,8 @@ bindsym $mod+q kill
 
 # bindsym $mod+d exec --no-startup-id /home/amank/bin/rofi-bin-launcher.sh
 # replace your existing bindsym for rofi with this:
-bindsym $mod+d exec --no-startup-id /bin/bash -lc '$HOME/.config/rofi/launchers/type-3/launcher.sh'
+bindsym $mod+d exec --no-startup-id /bin/bash -l -c '$HOME/.config/rofi/launchers/type-2/launcher.sh'
+# bindsym $mod+d exec --no-startup-id env > /tmp/i3-env
 # clipboard history
 bindsym $mod+c exec rofi -modi "clipboard:greenclip print" -show clipboard
 
@@ -473,7 +474,8 @@ exec --no-startup-id nitrogen --restore
 exec_always dunst
 
 #Keybinding for i3lock
-bindsym $mod+x exec bash ~/.local/bin/archlinux-logout
+# bindsym $mod+x exec bash ~/.local/bin/archlinux-logout
+bindsym $mod+x exec bash $HOME/.config/rofi/powermenu/type-1/powermenu.sh
 
 #Assign Programs to workspaces
 for_window [class="firefox"] move to workspace $ws2

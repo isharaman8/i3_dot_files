@@ -1,0 +1,1 @@
+conky -c /home/amank/.config/conky/AUR-Skeleton.conkyrc & sleep 1s

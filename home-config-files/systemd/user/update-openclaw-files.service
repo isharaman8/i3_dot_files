@@ -1,0 +1,7 @@
+[Unit]
+Description=Daily OpenClaw Files Sanitized Backup (User)
+
+[Service]
+Type=oneshot
+ExecStart=/home/amank/bin/update-openclaw-files
+WorkingDirectory=/home/amank/.openclaw/workspace

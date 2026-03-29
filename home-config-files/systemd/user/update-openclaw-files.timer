@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily OpenClaw sanitized backup
+
+[Timer]
+OnCalendar=*-*-* 04:30:00
+Persistent=true
+Unit=update-openclaw-files.service
+
+[Install]
+WantedBy=timers.target

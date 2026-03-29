@@ -17,3 +17,7 @@ end
 # bun
 set --export BUN_INSTALL "$HOME/.bun"
 set --export PATH $BUN_INSTALL/bin $PATH
+
+# OpenClaw Completion
+source "/home/amank/.openclaw/completions/openclaw.fish"
+export PATH="$HOME/.npm-global/bin:$PATH"

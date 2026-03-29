@@ -1,0 +1,281 @@
+# #!/usr/bin/env bash
+# set -Eeuo pipefail
+#
+# LOG_DIR="$HOME/bin/logs"
+# LOG_FILE="$LOG_DIR/update-openclaw-files.log"
+# WORKSPACE="$HOME/.openclaw/workspace"
+# OPENCLAW_DIR="$HOME/.openclaw"
+# BACKUP_REPO="$WORKSPACE"
+# SNAPSHOT_DIR="$BACKUP_REPO/backup"
+# TMP_DIR="$(mktemp -d)"
+# STAGING_DIR="$TMP_DIR/openclaw-backup"
+# TELEGRAM_TARGET="1010278016"
+# DATE_STAMP="$(date '+%Y-%m-%d %H:%M:%S %Z')"
+# SUMMARY_FILE="$TMP_DIR/summary.txt"
+# MANIFEST_FILE="$STAGING_DIR/MANIFEST.txt"
+# BACKUP_DATE="$(date '+%Y-%m-%d')"
+#
+# mkdir -p "$LOG_DIR"
+#
+# log() {
+#   echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" | tee -a "$LOG_FILE"
+# }
+#
+# send_telegram() {
+#   local message="$1"
+#   openclaw message send --channel telegram --target "$TELEGRAM_TARGET" --message "$message" >>"$LOG_FILE" 2>&1 || true
+# }
+#
+# cleanup() {
+#   rm -rf "$TMP_DIR"
+# }
+# trap cleanup EXIT
+#
+# on_error() {
+#   local line="${1:-unknown}"
+#   local msg="Backup ERROR ($BACKUP_DATE): update-openclaw-files failed near line $line. Check $LOG_FILE"
+#   log "$msg"
+#   send_telegram "$msg"
+# }
+# trap 'on_error $LINENO' ERR
+#
+# require_cmd() {
+#   command -v "$1" >/dev/null 2>&1 || {
+#     log "Missing required command: $1"
+#     exit 1
+#   }
+# }
+#
+# require_cmd git
+# require_cmd python
+# require_cmd diff
+# require_cmd find
+# require_cmd sed
+# require_cmd openclaw
+#
+# log "Starting sanitized OpenClaw backup"
+# mkdir -p "$STAGING_DIR" "$SNAPSHOT_DIR"
+#
+# copy_file() {
+#   local src="$1"
+#   local rel="$2"
+#   local dest="$STAGING_DIR/$rel"
+#   if [[ -f "$src" ]]; then
+#     mkdir -p "$(dirname "$dest")"
+#     cp -a "$src" "$dest"
+#     log "Included $rel"
+#   else
+#     log "Missing optional file: $src"
+#   fi
+# }
+#
+# copy_tree_filtered() {
+#   local src="$1"
+#   local rel="$2"
+#   if [[ -d "$src" ]]; then
+#     mkdir -p "$STAGING_DIR/$rel"
+#     rsync -a \
+#       --exclude '.git/' \
+#       --exclude 'node_modules/' \
+#       --exclude '.venv/' \
+#       --exclude '__pycache__/' \
+#       --exclude '*.pyc' \
+#       --exclude 'openclaw-session-*.html' \
+#       --exclude 'backup/' \
+#       "$src/" "$STAGING_DIR/$rel/"
+#     log "Included tree $rel"
+#   else
+#     log "Missing optional tree: $src"
+#   fi
+# }
+#
+# # Workspace / personality / memory / custom workflow files
+# copy_tree_filtered "$WORKSPACE" "workspace"
+#
+# # OpenClaw restore-critical config files (sanitized in backup copy only)
+# copy_file "$OPENCLAW_DIR/openclaw.json" "config/openclaw.json"
+# copy_file "$OPENCLAW_DIR/openclaw.json.bak" "config/openclaw.json.bak"
+# copy_file "$OPENCLAW_DIR/openclaw.json.bak.1" "config/openclaw.json.bak.1"
+# copy_file "$OPENCLAW_DIR/openclaw.json.bak.2" "config/openclaw.json.bak.2"
+# copy_file "$OPENCLAW_DIR/openclaw.json.bak.3" "config/openclaw.json.bak.3"
+# copy_file "$OPENCLAW_DIR/openclaw.json.bak.4" "config/openclaw.json.bak.4"
+# copy_file "$OPENCLAW_DIR/update-check.json" "config/update-check.json"
+# copy_file "$OPENCLAW_DIR/logs/config-health.json" "config/logs/config-health.json"
+# copy_file "$OPENCLAW_DIR/logs/config-audit.jsonl" "config/logs/config-audit.jsonl"
+# copy_file "$OPENCLAW_DIR/devices/paired.json" "config/devices/paired.json"
+# copy_file "$OPENCLAW_DIR/devices/pending.json" "config/devices/pending.json"
+# copy_file "$OPENCLAW_DIR/telegram/update-offset-default.json" "config/telegram/update-offset-default.json"
+# copy_file "$OPENCLAW_DIR/telegram/command-hash-default-660f6318dfd6494f.txt" "config/telegram/command-hash-default-660f6318dfd6494f.txt"
+#
+# # Backup the systemd automation itself
+# copy_file "$HOME/bin/update-openclaw-files" "automation/update-openclaw-files"
+# copy_file "$HOME/.config/systemd/user/update-openclaw-files.service" "automation/update-openclaw-files.service"
+# copy_file "$HOME/.config/systemd/user/update-openclaw-files.timer" "automation/update-openclaw-files.timer"
+# copy_file "$HOME/.config/systemd/user/organize.service" "automation/organize.service"
+# copy_file "$HOME/.config/systemd/user/organize.timer" "automation/organize.timer"
+# copy_file "$HOME/.config/systemd/user/update-dotfiles.service" "automation/update-dotfiles.service"
+# copy_file "$HOME/.config/systemd/user/update-dotfiles.timer" "automation/update-dotfiles.timer"
+#
+# # Record installed local skills metadata if present
+# copy_tree_filtered "$WORKSPACE/skills" "workspace/skills"
+# copy_tree_filtered "$WORKSPACE/.clawhub" "workspace/.clawhub"
+#
+# python - "$STAGING_DIR" <<'PY'
+# import json
+# import pathlib
+# import re
+# import shutil
+# import sys
+#
+# root = pathlib.Path(sys.argv[1])
+# manifest = []
+# secrets_found = []
+#
+# placeholder_patterns = [
+#     (re.compile(r'ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|gho_[A-Za-z0-9]{20,}'), '[GITHUB_TOKEN]'),
+#     (re.compile(r'(?<![A-Za-z0-9])(sk-[A-Za-z0-9\-_]{20,})(?![A-Za-z0-9])'), '[OPENAI_API_KEY]'),
+#     (re.compile(r'(?<![A-Za-z0-9])(claude-[A-Za-z0-9\-_]{20,})(?![A-Za-z0-9])'), '[CLAUDE_API_KEY]'),
+#     (re.compile(r'\b\d{8,10}:[A-Za-z0-9_-]{20,}\b'), '[TELEGRAM_BOT_TOKEN]'),
+#     (re.compile(r'(?i)(api[_-]?key|token|secret|password|passwd|authorization|bearer|client_secret)\s*[:=]\s*["\']?([^"\'\n]+)["\']?'), None),
+#     (re.compile(r'(?i)(https?://[^\s"\']*:[^\s"\'@]+@[^\s"\']+)'), '[PRIVATE_URL_WITH_CREDENTIALS]'),
+# ]
+#
+# env_name_map = {
+#     'OPENAI_API_KEY': '[OPENAI_API_KEY]',
+#     'ANTHROPIC_API_KEY': '[CLAUDE_API_KEY]',
+#     'CLAUDE_API_KEY': '[CLAUDE_API_KEY]',
+#     'TELEGRAM_BOT_TOKEN': '[TELEGRAM_BOT_TOKEN]',
+#     'DISCORD_TOKEN': '[DISCORD_BOT_TOKEN]',
+#     'GITHUB_TOKEN': '[GITHUB_TOKEN]',
+#     'GH_TOKEN': '[GITHUB_TOKEN]',
+#     'GEMINI_API_KEY': '[GEMINI_API_KEY]',
+# }
+#
+# skip_binary_ext = {'.png', '.jpg', '.jpeg', '.gif', '.webp', '.ico', '.pdf', '.zip', '.gz'}
+#
+# for path in sorted(root.rglob('*')):
+#     if not path.is_file():
+#         continue
+#     rel = path.relative_to(root)
+#     manifest.append(str(rel))
+#     if path.suffix.lower() in skip_binary_ext:
+#         continue
+#     try:
+#         text = path.read_text(encoding='utf-8')
+#     except UnicodeDecodeError:
+#         continue
+#
+#     original = text
+#
+#     for regex, replacement in placeholder_patterns:
+#         if replacement is not None:
+#             if regex.search(text):
+#                 secrets_found.append(f"{rel}: matched {replacement}")
+#                 text = regex.sub(replacement, text)
+#         else:
+#             def repl(match):
+#                 key = match.group(1)
+#                 value = match.group(2).strip()
+#                 placeholder = env_name_map.get(key.upper(), f'[{key.upper()}]')
+#                 secrets_found.append(f"{rel}: matched {key}")
+#                 return f"{key}={placeholder}"
+#             text = regex.sub(repl, text)
+#
+#     # Structured JSON redaction for known credential-heavy files
+#     if path.name.startswith('openclaw.json'):
+#         try:
+#             obj = json.loads(text)
+#             tg = obj.get('channels', {}).get('telegram', {})
+#             if isinstance(tg, dict):
+#                 if 'botToken' in tg:
+#                     tg['botToken'] = '[TELEGRAM_BOT_TOKEN]'
+#                     secrets_found.append(f"{rel}: redacted telegram.botToken")
+#                 accounts = tg.get('accounts')
+#                 if isinstance(accounts, dict):
+#                     for acct in accounts.values():
+#                         if isinstance(acct, dict) and 'botToken' in acct:
+#                             acct['botToken'] = '[TELEGRAM_BOT_TOKEN]'
+#             wa = obj.get('channels', {}).get('whatsapp', {})
+#             if isinstance(wa, dict):
+#                 for k in ('pairingCode', 'token', 'apiKey', 'webhookSecret'):
+#                     if k in wa:
+#                         wa[k] = f'[{k.upper()}]'
+#                         secrets_found.append(f"{rel}: redacted whatsapp.{k}")
+#             auth = obj.get('auth', {})
+#             if isinstance(auth, dict) and 'profiles' in auth and isinstance(auth['profiles'], dict):
+#                 for profile in auth['profiles'].values():
+#                     if isinstance(profile, dict):
+#                         for k in list(profile.keys()):
+#                             if 'key' in k.lower() or 'token' in k.lower() or 'secret' in k.lower() or 'password' in k.lower():
+#                                 profile[k] = f'[{k.upper()}]'
+#                                 secrets_found.append(f"{rel}: redacted auth profile field {k}")
+#             gateway = obj.get('gateway', {})
+#             if isinstance(gateway, dict):
+#                 gateway_auth = gateway.get('auth')
+#                 if isinstance(gateway_auth, dict):
+#                     for k in list(gateway_auth.keys()):
+#                         if 'key' in k.lower() or 'token' in k.lower() or 'secret' in k.lower() or 'password' in k.lower():
+#                             gateway_auth[k] = f'[{k.upper()}]'
+#                             secrets_found.append(f"{rel}: redacted gateway.auth.{k}")
+#             def redact_nested(value, prefix=''):
+#                 if isinstance(value, dict):
+#                     for kk in list(value.keys()):
+#                         vv = value[kk]
+#                         key_lower = kk.lower()
+#                         full = f"{prefix}.{kk}" if prefix else kk
+#                         if any(term in key_lower for term in ('key', 'token', 'secret', 'password', 'webhooksecret')) and isinstance(vv, (str, int, float, bool)):
+#                             value[kk] = f'[{kk.upper()}]'
+#                             secrets_found.append(f"{rel}: redacted {full}")
+#                         else:
+#                             redact_nested(vv, full)
+#                 elif isinstance(value, list):
+#                     for idx, item in enumerate(value):
+#                         redact_nested(item, f"{prefix}[{idx}]")
+#             redact_nested(obj.get('channels', {}), 'channels')
+#             redact_nested(obj.get('plugins', {}), 'plugins')
+#             text = json.dumps(obj, indent=2, ensure_ascii=False) + '\n'
+#         except Exception:
+#             pass
+#
+#     if '-----BEGIN' in text and 'PRIVATE KEY-----' in text:
+#         text = re.sub(r'-----BEGIN [^-]+-----.*?-----END [^-]+-----', '[PRIVATE_KEY_REDACTED]', text, flags=re.S)
+#         secrets_found.append(f"{rel}: redacted private key block")
+#
+#     if text != original:
+#         path.write_text(text, encoding='utf-8')
+#
+# (root / 'SANITIZATION_REPORT.txt').write_text(
+#     ('No secrets detected\n' if not secrets_found else '\n'.join(secrets_found) + '\n'),
+#     encoding='utf-8'
+# )
+# (root / 'MANIFEST.txt').write_text('\n'.join(manifest) + '\n', encoding='utf-8')
+# PY
+#
+# log "Built sanitized staging snapshot"
+#
+# rm -rf "$SNAPSHOT_DIR"
+# mkdir -p "$SNAPSHOT_DIR"
+# cp -a "$STAGING_DIR/." "$SNAPSHOT_DIR/"
+#
+# cd "$BACKUP_REPO"
+# git add backup
+#
+# if git diff --cached --quiet -- backup; then
+#   SUMMARY="no sanitized backup changes"
+#   COMMIT_MSG="backup: $BACKUP_DATE no changes"
+#   log "No backup changes detected"
+# else
+#   git diff --cached --summary -- backup >"$SUMMARY_FILE" || true
+#   SUMMARY="$(sed -n '1,10p' "$SUMMARY_FILE" | tr '\n' '; ' | sed 's/; $//')"
+#   [[ -n "$SUMMARY" ]] || SUMMARY="sanitized OpenClaw backup updated"
+#   COMMIT_MSG="backup: $BACKUP_DATE ${SUMMARY:0:180}"
+#   git commit -m "$COMMIT_MSG" >>"$LOG_FILE" 2>&1
+#   git push -u origin main >>"$LOG_FILE" 2>&1
+#   log "Pushed sanitized backup to origin/main"
+# fi
+#
+# SUCCESS_MSG="Backup OK ($BACKUP_DATE): $SUMMARY"
+# log "$SUCCESS_MSG"
+# send_telegram "$SUCCESS_MSG"
+
+bash "$HOME/.openclaw/backup-openclaw.sh"

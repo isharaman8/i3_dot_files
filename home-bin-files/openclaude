@@ -1,0 +1,73 @@
+##!/usr/bin/env bash
+#set -euo pipefail
+#
+#AGENT_NAME="aira"
+#CURRENT_DIR="$(pwd)"
+#
+#if ! command -v openclaw >/dev/null 2>&1; then
+#  echo "Error: openclaw command not found in PATH."
+#  exit 1
+#fi
+#
+#echo "Aira project launcher"
+#echo "Agent      : ${AGENT_NAME}"
+#echo "Project dir: ${CURRENT_DIR}"
+#echo
+#read -r -p "Continue? [y/N] " reply
+#
+#case "${reply}" in
+#[yY] | [yY][eE][sS]) ;;
+#*)
+#  echo "Cancelled."
+#  exit 0
+#  ;;
+#esac
+#
+#openclaw agents update "${AGENT_NAME}" --workspace "${CURRENT_DIR}"
+#
+#echo
+#echo "Workspace updated."
+#echo "Now start Aira with the command your OpenClaw install supports."
+#echo "Examples:"
+#echo "  openclaw console --agent ${AGENT_NAME}"
+#echo "  openclaw --agent ${AGENT_NAME}"
+
+# openclaw tui --session agent:aira:main
+
+#!/usr/bin/env bash
+set -euo pipefail
+
+AGENT_NAME="aira"
+CURRENT_DIR="$(pwd)"
+
+if ! command -v openclaw >/dev/null 2>&1; then
+  echo "Error: openclaw command not found in PATH."
+  exit 1
+fi
+
+echo "Aira session launcher"
+echo "Agent      : ${AGENT_NAME}"
+echo "Workspace   : ${CURRENT_DIR}"
+echo
+echo "This will start a NEW session for ${AGENT_NAME} in the current folder."
+echo
+
+read -r -p "Continue? [y/N] " reply
+
+case "${reply}" in
+  [yY]|[yY][eE][sS]) ;;
+  *)
+    echo "Cancelled."
+    exit 0
+    ;;
+esac
+
+cd "${CURRENT_DIR}"
+
+if openclaw chat --help >/dev/null 2>&1; then
+  exec openclaw chat --agent "${AGENT_NAME}"
+elif openclaw console --help >/dev/null 2>&1; then
+  exec openclaw console --agent "${AGENT_NAME}"
+else
+  exec openclaw --agent "${AGENT_NAME}"
+fi

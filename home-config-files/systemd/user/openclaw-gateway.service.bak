@@ -1,0 +1,25 @@
+[Unit]
+Description=OpenClaw Gateway (v2026.3.28)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecStart=/home/amank/.local/share/nvm/v25.8.2/bin/node /home/amank/.local/share/nvm/v25.8.2/lib/node_modules/openclaw/dist/entry.js gateway --port 18789
+Restart=always
+RestartSec=5
+TimeoutStopSec=30
+TimeoutStartSec=30
+SuccessExitStatus=0 143
+KillMode=control-group
+Environment=HOME=/home/amank
+Environment=TMPDIR=/tmp
+Environment=PATH=/home/amank/.local/share/nvm/v25.8.2/bin:/home/amank/.bun/bin:/home/amank/.local/bin:/home/amank/.npm-global/bin:/home/amank/bin:/home/amank/.volta/bin:/home/amank/.asdf/shims:/home/amank/.nvm/current/bin:/home/amank/.fnm/current/bin:/home/amank/.local/share/pnpm:/usr/local/bin:/usr/bin:/bin
+Environment=OPENCLAW_GATEWAY_PORT=18789
+Environment=OPENCLAW_SYSTEMD_UNIT=openclaw-gateway.service
+Environment="OPENCLAW_WINDOWS_TASK_NAME=OpenClaw Gateway"
+Environment=OPENCLAW_SERVICE_MARKER=openclaw
+Environment=OPENCLAW_SERVICE_KIND=gateway
+Environment=OPENCLAW_SERVICE_VERSION=2026.3.28
+
+[Install]
+WantedBy=default.target
