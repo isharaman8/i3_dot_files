@@ -15,6 +15,8 @@ appstream
 appstream-qt5
 arc-gtk-theme
 arch-install-scripts
+arch-wiki-docs
+arch-wiki-lite
 archlinux-kernel-manager
 archlinux-tweak-tool-git
 arcolinux-alacritty-git
@@ -88,6 +90,7 @@ cryptsetup
 cups
 cups-filters
 cups-pdf
+cursor-bin
 dconf-editor
 ddrescue
 dex
@@ -98,6 +101,7 @@ dmenu
 dmidecode
 dmraid
 dnsmasq
+docker
 dosfstools
 downgrade
 duf
@@ -298,6 +302,7 @@ surfn-icons-git
 syslinux
 system-config-printer
 systemd-resolvconf
+tailscale
 tcpdump
 telegram-desktop
 terminus-font
@@ -341,6 +346,7 @@ volumeicon
 vpnc
 wd719x-firmware
 wget
+wikiman
 wireless-regdb
 wireless_tools
 woff2-font-awesome

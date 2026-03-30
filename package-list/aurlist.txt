@@ -1,5 +1,6 @@
 appstream-qt5
 blueberry
+cursor-bin
 gnome-bluetooth
 gogcli
 gtk2
