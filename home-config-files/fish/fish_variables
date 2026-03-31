@@ -2,6 +2,7 @@
 # VERSION: 3.0
 SETUVAR --export ANDROID_HOME:/home/amank/Android/Sdk
 SETUVAR --export EDITOR:nvim
+SETUVAR --export N8N_SECURE_COOKIE:false
 SETUVAR --export VISUAL:nvim
 SETUVAR __fish_initialized:4300
 SETUVAR _fisher_jorgebucaran_2F_fisher_files:\x7e/\x2econfig/fish/functions/fisher\x2efish\x1e\x7e/\x2econfig/fish/completions/fisher\x2efish
