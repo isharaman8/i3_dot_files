@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+# killport - kill process(es) listening on a given port
+# Usage: killport [-f] <port>
+#   -f : force kill (SIGKILL). Default is SIGTERM.
+
+set -euo pipefail
+
+if [[ "${#}" -lt 1 ]]; then
+  echo "Usage: $0 [-f] <port>"
+  exit 2
+fi
+
+FORCE=""
+if [[ "$1" == "-f" ]]; then
+  FORCE="-f"
+  shift
+fi
+
+PORT="$1"
+if ! [[ "$PORT" =~ ^[0-9]+$ ]]; then
+  echo "Error: port must be a number."
+  exit 2
+fi
+
+kill_signal="TERM"
+if [[ "$FORCE" == "-f" ]]; then
+  kill_signal="KILL"
+fi
+
+# Try multiple methods to get PIDs
+pids=""
+
+# lsof (common on macOS and Linux)
+if command -v lsof >/dev/null 2>&1; then
+  pids="$(lsof -iTCP:"$PORT" -sTCP:LISTEN -t 2>/dev/null || true)"
+fi
+
+# ss (modern Linux)
+if [[ -z "$pids" ]] && command -v ss >/dev/null 2>&1; then
+  # format: pid, e.g. users:(("program",pid=1234,fd=...))
+  pids="$(ss -ltnp 2>/dev/null | awk -v port=":$PORT" '$4 ~ port { for(i=1;i<=NF;i++) if($i ~ /pid=/) { gsub(/.*pid=|,.*$/,"",$i); print $i } }' || true)"
+fi
+
+# netstat (fallback)
+if [[ -z "$pids" ]] && command -v netstat >/dev/null 2>&1; then
+  pids="$(netstat -ltnp 2>/dev/null | awk -v port=":$PORT" '$4 ~ port { if($7 ~ /[0-9]+\/.*/){ split($7,a,"/"); print a[1] } }' || true)"
+fi
+
+# More fallback: ss listing without -p (no pid info) -> try lsof without LISTEN
+if [[ -z "$pids" ]] && command -v lsof >/dev/null 2>&1; then
+  pids="$(lsof -iTCP:"$PORT" -t 2>/dev/null || true)"
+fi
+
+# Trim and unique
+pids="$(echo "$pids" | tr ' ' '\n' | sed '/^$/d' | sort -n -u | tr '\n' ' ')"
+
+if [[ -z "$pids" ]]; then
+  echo "No process found listening on port $PORT."
+  exit 0
+fi
+
+echo "Found PID(s) on port $PORT: $pids"
+for pid in $pids; do
+  if ! kill -"$kill_signal" "$pid" >/dev/null 2>&1; then
+    echo "Failed to send SIG$kill_signal to PID $pid. Trying with sudo..."
+    if command -v sudo >/dev/null 2>&1; then
+      sudo kill -"$kill_signal" "$pid" || { echo "sudo kill failed for PID $pid"; }
+    else
+      echo "sudo not available. Could not kill PID $pid."
+    fi
+  else
+    echo "Sent SIG$kill_signal to PID $pid."
+  fi
+done
+
+# Optional: show if ports are still occupied
+sleep 0.3
+if command -v ss >/dev/null 2>&1; then
+  if ss -ltn | awk -v p=":$PORT" '$4 ~ p { found=1 } END{ exit !found }'; then
+    echo "Warning: port $PORT is still in LISTEN state."
+    exit 1
+  fi
+fi
+
+echo "Done."
